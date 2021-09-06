@@ -1,0 +1,15 @@
+\documentclass{article}
+
+\usepackage{sympytex}
+\usepackage{amsmath}
+
+\begin{document}
+
+\begin{sympyblock}
+I = integral(-1/2*x**2+x+4, x, -2, 4, hold=True)
+\end{sympyblock}
+\begin{equation*}
+\sympy{I} = \sympy{I.simplify()}
+\end{equation*}
+
+\end{document}
