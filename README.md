@@ -43,6 +43,6 @@ sudo apt-get install liblua5.3-dev -y
 ```
 Lua: usr/include/lua5.3
 GiNaC: usr/include/ginac
-SymbolicC++: /usr/local/include/symbolicc++
+SymbolicC++: /usr/local/include/
 SymEngine: /usr/local/include/symengine
 ```
