@@ -1,3 +1,5 @@
+#include <gsl/gsl>
+
 #include <lua5.3/lua.h>
 #include <lua5.3/lualib.h>
 #include <lua5.3/lauxlib.h>
@@ -13,8 +15,10 @@
 extern "C"
 {
     LIBSYMCOMP_REGISTER_LUAFUNC(expression, L)
-    {
-        auto what = std::string(lua_tostring(L, -1));
+    {        
+        Expects(L != nullptr);
+
+        auto what = lua_tostring(L, -1);
 
         auto result = symcomp::ExprRep(what);
 
@@ -22,9 +26,11 @@ extern "C"
     }
 
     LIBSYMCOMP_REGISTER_LUAFUNC(derivate, L)
-    {
-        auto var = std::string(lua_tostring(L, -1));
-        auto what = std::string(lua_tostring(L, -2));
+    {        
+        Expects(L != nullptr);
+
+        auto var = lua_tostring(L, -1);
+        auto what = lua_tostring(L, -2);
 
         auto result = symcomp::Derivate(what, var);
 
@@ -32,11 +38,13 @@ extern "C"
     }
 
     LIBSYMCOMP_REGISTER_LUAFUNC(integrate, L)
-    {
-        auto var = std::string(lua_tostring(L, -1));
+    {        
+        Expects(L != nullptr);
+        
+        auto var = lua_tostring(L, -1);
         auto upper = lua_tonumber(L, -2); // TODO: checknumber?
         auto lower = lua_tonumber(L, -3);
-        auto what = std::string(lua_tostring(L, -4));
+        auto what = lua_tostring(L, -4);
 
         auto result = symcomp::Integrate(what, lower, upper, var);
 
@@ -50,7 +58,9 @@ extern "C"
     LIBSYMCOMP_END_LUAMODULE
 
     int luaopen_symcomp(lua_State* L)
-    {
+    {        
+        Expects(L != nullptr);
+        
         luaL_newlib(L, functions);
         return 1;
     }

@@ -8,7 +8,7 @@
 
 namespace symcomp::util
 {
-    SymEngine::Expression StringToSymEngineExpression(std::string str)
+    SymEngine::Expression StringToSymEngineExpression(const std::string& str)
     {
         return SymEngine::Expression(SymEngine::parse(str));
     }

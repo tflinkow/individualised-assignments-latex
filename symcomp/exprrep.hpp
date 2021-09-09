@@ -25,11 +25,11 @@ namespace symcomp
         std::string Basic;
         std::string LaTeX;
 
-        ExprRep(std::string& basic, std::string& laTeX) : Basic(basic), LaTeX(laTeX)
+        ExprRep(std::string basic, std::string laTeX) : Basic(basic), LaTeX(laTeX)
         {
         }
 
-        ExprRep(std::string& basic)
+        ExprRep(std::string basic)
         {
             *this = ExprRep(symcomp::util::StringToSymEngineExpression(basic));
         }
@@ -61,7 +61,7 @@ namespace symcomp
 
         // TODO: also for SymbolicC++
 
-        int ReturnToLua(lua_State* L)
+        int ReturnToLua(gsl::not_null<lua_State*> L)
         {
             lua_pushstring(L, this->Basic.c_str());
             lua_pushstring(L, this->LaTeX.c_str());

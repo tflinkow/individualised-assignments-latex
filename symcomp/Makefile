@@ -1,5 +1,5 @@
 CPP = g++
-CPFLAGS = -fPIC -shared -Wall
+CPFLAGS = -std=c++20 -fPIC -shared -Wall -Wextra
 
 BDIR = bin
 
