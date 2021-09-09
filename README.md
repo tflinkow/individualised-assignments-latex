@@ -17,6 +17,8 @@ sudo apt-get update
 sudo apt-get upgrade -ygitk
 sudo apt-get install build-essential -y
 
+sudo apt-get install libmsgsl-dev -y
+
 #SymEngine:
 sudo apt-get install cmake libgmp-dev -y
 #download using Git
