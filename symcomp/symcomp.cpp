@@ -43,6 +43,16 @@ extern "C"
         return result.ReturnToLua(L);
     }
 
+    LIBSYMCOMP_REGISTER_LUAFUNC(solve, L, 2)
+
+        auto var = luaL_checkstring(L, -1);
+        auto what = luaL_checkstring(L, -2);
+
+        auto solutions = symcomp::Solve(what, var);
+
+        return symcomp::ReturnExprRepVectorToLua(L, solutions);   
+    }
+
     LIBSYMCOMP_REGISTER_LUAFUNC(derivate, L, 2)
 
         auto var = luaL_checkstring(L, -1);
@@ -68,6 +78,7 @@ extern "C"
     LIBSYMCOMP_BEGIN_LUAMODULE(functions)
         LIBSYMCOMP_LUAMODULE_REGISTER(expression),
         LIBSYMCOMP_LUAMODULE_REGISTER(evaluateAt),
+        LIBSYMCOMP_LUAMODULE_REGISTER(solve),
         LIBSYMCOMP_LUAMODULE_REGISTER(derivate),
         LIBSYMCOMP_LUAMODULE_REGISTER(integrate),
     LIBSYMCOMP_END_LUAMODULE

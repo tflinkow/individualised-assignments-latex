@@ -5,6 +5,7 @@
 
 #include <symengine/expression.h>
 #include <symengine/parser.h>
+#include <symengine/solve.h>
 
 #include <symbolicc++.h>
 
@@ -24,6 +25,27 @@ namespace symcomp
         auto result = expression.subs(subsMap);
 
         return symcomp::ExprRep(result);
+    }
+
+    std::vector<symcomp::ExprRep> Solve(const std::string& what, const std::string& var)
+    {
+        auto symVar = SymEngine::make_rcp<SymEngine::Symbol>(var);
+        auto expression = symcomp::util::StringToSymEngineExpression(what);
+
+        auto result = SymEngine::solve(expression, symVar)->get_args();
+
+        std::vector<symcomp::ExprRep> solutions;
+        solutions.reserve(result.size());
+
+        for(auto const& value : result)
+        {
+            auto ex = SymEngine::Expression(value);
+            auto exprRep = symcomp::ExprRep(ex);
+
+            solutions.push_back(exprRep);
+        }
+        
+        return solutions;
     }
 
     symcomp::ExprRep Derivate(const std::string& what, const std::string& var)

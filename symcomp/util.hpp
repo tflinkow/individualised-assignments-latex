@@ -38,7 +38,7 @@ namespace symcomp::util
     {
         auto actual = lua_gettop(L);
 
-        if (actual != expected)
+        if (actual != expected) [[unlikely]]
         {
             std::ostringstream oss;
             oss << "function '" << function << "' expected " << expected << " parameters, got " << actual;

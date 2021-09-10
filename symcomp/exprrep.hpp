@@ -25,6 +25,8 @@ namespace symcomp
         std::string Basic;
         std::string LaTeX;
 
+        ExprRep() = default;
+
         ExprRep(std::string basic, std::string laTeX) : Basic(basic), LaTeX(laTeX)
         {
         }
@@ -77,6 +79,21 @@ namespace symcomp
             return 1; // one return value (a table)
         }
     };
+
+    int ReturnExprRepVectorToLua(gsl::not_null<lua_State*> L, std::vector<symcomp::ExprRep> collection)
+    {
+        lua_newtable(L); // vector @-1
+
+        int i = 1;
+
+        for (auto& value : collection)
+        {
+            value.ReturnToLua(L); // table @-1, vector @-2
+            lua_rawseti(L, -2, i++);
+        }
+
+        return 1;
+    }
 }
 
 #endif // LIBSYMCOMP_EXPRREP_HPP
