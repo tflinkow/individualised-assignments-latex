@@ -1,10 +1,19 @@
 local symcomp = require "symcomp"
 
-basic, latex = symcomp.expression("3x^4+7/(sin(x^2))")
+    function basic(t)
+        return t[1]
+    end
 
-print(latex)
+    function latex(t)
+        return t[2]
+    end
+    
+    f = symcomp.expression("1/2*x^2")
+    g = symcomp.expression("x+4")
+    
+    result = symcomp.derivate(basic(f), "x")
 
-basic, latex = symcomp.derivate(basic, "x")
+    print(latex(f))
+    print(latex(result))
 
-print(basic)
-print(latex)
+    print(latex(symcomp.evaluateAt(basic(g), "x", 4)))

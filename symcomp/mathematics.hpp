@@ -13,6 +13,19 @@
 
 namespace symcomp
 {
+    symcomp::ExprRep EvaluateAt(const std::string& what, const std::string& var, double value)
+    {
+        SymEngine::Expression symVar(var);
+        auto expression = symcomp::util::StringToSymEngineExpression(what);
+
+        SymEngine::map_basic_basic subsMap;
+        subsMap[symVar] = symcomp::util::TryToInt(value);
+
+        auto result = expression.subs(subsMap);
+
+        return symcomp::ExprRep(result);
+    }
+
     symcomp::ExprRep Derivate(const std::string& what, const std::string& var)
     {
         SymEngine::Expression symVar(var);

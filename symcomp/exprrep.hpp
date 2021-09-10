@@ -63,10 +63,10 @@ namespace symcomp
 
         int ReturnToLua(gsl::not_null<lua_State*> L)
         {
-            lua_pushstring(L, this->Basic.c_str());
-            lua_pushstring(L, this->LaTeX.c_str());
+            // lua_pushstring(L, this->Basic.c_str());
+            // lua_pushstring(L, this->LaTeX.c_str());
             
-            return 2;
+            // return 2;
         
             lua_newtable(L); // table @-1
             lua_pushstring(L, this->Basic.c_str()); // table @-2, string @-1
