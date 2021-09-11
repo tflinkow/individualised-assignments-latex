@@ -7,7 +7,7 @@
 #include <symengine/parser.h>
 #include <symengine/solve.h>
 
-#include <symbolicc++.h>
+//#include <symbolicc++.h>
 
 #include "util.hpp"
 #include "exprrep.hpp"
@@ -48,7 +48,7 @@ namespace symcomp
         return solutions;
     }
 
-    symcomp::ExprRep Derivate(const std::string& what, const std::string& var)
+    symcomp::ExprRep Differentiate(const std::string& what, const std::string& var)
     {
         SymEngine::Expression symVar(var);
         auto expression = symcomp::util::StringToSymEngineExpression(what);

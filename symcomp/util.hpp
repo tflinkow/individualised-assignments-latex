@@ -16,13 +16,13 @@
 namespace symcomp::util
 {
     // Creates a SymEngine::Expression by parsing the supplied string.
-    SymEngine::Expression StringToSymEngineExpression(const std::string& str)
+    inline SymEngine::Expression StringToSymEngineExpression(const std::string& str)
     {
-        return SymEngine::Expression(SymEngine::parse(str));
+        return {SymEngine::parse(str) };
     }
 
     // Returns a SymEngine::Integer if the specified value is a whole number (such as 4.0 or 7.0) and SymEngine::Number otherwise.
-    SymEngine::RCP<const SymEngine::Number> TryToInt(double a)
+    inline SymEngine::RCP<const SymEngine::Number> TryToInt(double a)
     {
         // https://stackoverflow.com/a/26343165/7571171
         if(std::fmod(a, static_cast<decltype(a)>(1.0)) == 0.0)
@@ -34,7 +34,7 @@ namespace symcomp::util
     }
 
     // Checks whether the Lua function was called with the specified number of parameters and calls luaL_error if it was not.
-    void LuaAssertParamCount(lua_State* L, const std::string& function, int expected)
+    inline void LuaAssertParamCount(lua_State* L, const std::string& function, int expected)
     {
         auto actual = lua_gettop(L);
 
