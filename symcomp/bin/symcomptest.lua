@@ -17,14 +17,29 @@ result = symcomp.diff(basic(f), "x")
 print(latex(f))
 print(latex(result))
 
---print(latex(symcomp.evalAt(basic(g), "x", 4)))
-
 -- calculate intersection points
 res = symcomp.solve("1/2*x^2-(x+4)", "x")
 print(#res) -- number of intersections
 
-first = res[1]
-print(latex(first))
+firstx = res[1]
+firsty = symcomp.evalAt(basic(f), "x", tonumber(basic(firstx))) -- todo: tonumber is ugly af
 
-second = res[2]
-print(latex(second))
+secondx = res[2]
+secondy = symcomp.evalAt(basic(f), "x", tonumber(basic(secondx)))
+
+--integrate between intersection points
+lim1 = tonumber(basic(firstx))
+lim2 = tonumber(basic(secondx))
+
+if lim1 < lim2 then
+    lower = lim1
+    upper = lim2
+else
+    lower = lim2
+    upper = lim1
+end
+
+sub = symcomp.sub(basic(g), basic(f))
+print(basic(sub))
+res = symcomp.integrate(basic(sub), lower, upper, "x")
+print(latex(res))

@@ -67,7 +67,7 @@ namespace symcomp
 
         GiNaC::parser reader(table);
 
-        auto integrand = reader(what);
+        auto integrand = reader(symcomp::util::SanitizeInputForGiNaC(what));
         GiNaC::ex expression = GiNaC::integral(symVar, lower, upper, integrand);
 
         return symcomp::ExprRep(expression.eval_integ());

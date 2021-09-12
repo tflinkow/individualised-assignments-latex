@@ -31,14 +31,11 @@ extern "C"
 
     LIBSYMCOMP_REGISTER_LUAFUNC(evalAt, L, 3)
 
-        //luaL_argcheck(L, lua_isnumber(L, -1), 3, "expected a number");
         auto value = luaL_checknumber(L, -1);        
         auto var = luaL_checkstring(L, -2);
         auto what = luaL_checkstring(L, -3);
 
         auto result = symcomp::EvaluateAt(what, var, value);
-
-        LOG("result is " << result.Basic);
 
         return result.ReturnToLua(L);
     }
@@ -51,6 +48,19 @@ extern "C"
         auto solutions = symcomp::Solve(what, var);
 
         return symcomp::ReturnExprRepVectorToLua(L, solutions);   
+    }
+
+    // subtracts b from a
+    // TODO: this does not call into mathematics.hpp!
+    LIBSYMCOMP_REGISTER_LUAFUNC(sub, L, 2)
+
+        auto b = luaL_checkstring(L, -1);
+        auto a = luaL_checkstring(L, -2);
+
+        auto bEx = symcomp::util::StringToSymEngineExpression(b);
+        auto aEx = symcomp::util::StringToSymEngineExpression(a);
+
+        return symcomp::ExprRep(SymEngine::sub(aEx, bEx)).ReturnToLua(L);
     }
 
     LIBSYMCOMP_REGISTER_LUAFUNC(diff, L, 2)
@@ -79,6 +89,7 @@ extern "C"
         LIBSYMCOMP_LUAMODULE_REGISTER(expr),
         LIBSYMCOMP_LUAMODULE_REGISTER(evalAt),
         LIBSYMCOMP_LUAMODULE_REGISTER(solve),
+        LIBSYMCOMP_LUAMODULE_REGISTER(sub),
         LIBSYMCOMP_LUAMODULE_REGISTER(diff),
         LIBSYMCOMP_LUAMODULE_REGISTER(integrate),
     LIBSYMCOMP_END_LUAMODULE

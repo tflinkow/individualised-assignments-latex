@@ -46,6 +46,25 @@ namespace symcomp::util
             luaL_error(L, oss.str().c_str());
         }
     }
+
+    // https://stackoverflow.com/a/24315631/7571171
+    inline std::string ReplaceAll(std::string source, const std::string& what, const std::string& with)
+    {
+        auto start = 0;
+
+        while ((start = source.find(what, start)) != std::string::npos)
+        {
+            source.replace(start, what.length(), with);
+            start += with.length();
+        }
+
+        return source;
+    }
+
+    inline std::string SanitizeInputForGiNaC(std::string input)
+    {
+        return symcomp::util::ReplaceAll(input, "**", "^"); // SymEngine uses ** for powers, GiNaC uses ^
+    }
 }
 
 #endif // LIBSYMCOMP_UTIL_HPP
