@@ -29,23 +29,34 @@ namespace symcomp
 
     std::vector<symcomp::ExprRep> Solve(const std::string& what, const std::string& var)
     {
-        auto symVar = SymEngine::make_rcp<SymEngine::Symbol>(var);
+        auto symVar = SymEngine::symbol(var);
         auto expression = symcomp::util::StringToSymEngineExpression(what);
 
-        auto result = SymEngine::solve(expression, symVar)->get_args();
+        // workaround, because below code does not work:
+        //auto solutions = SymEngine::solve(expression, symVar, SymEngine::reals());
+        // see https://github.com/symengine/symengine/issues/1843
 
-        std::vector<symcomp::ExprRep> solutions;
-        solutions.reserve(result.size());
+        auto solutions = SymEngine::solve(expression, symVar)->get_args();
 
-        for(auto const& value : result)
+        std::vector<symcomp::ExprRep> realSolutions;
+        realSolutions.reserve(solutions.size());
+
+        // sort in ascending order, e.g. x0 = -2, x1 = 4, x2 = 10
+        std::sort(solutions.begin(), solutions.end(), SymEngine::RCPBasicKeyLess());
+        std::reverse(solutions.begin(), solutions.end());
+
+        for (auto solution : solutions)
         {
-            auto ex = SymEngine::Expression(value);
-            auto exprRep = symcomp::ExprRep(ex);
+            if(SymEngine::is_true(SymEngine::is_real(*solution)))
+            {
+                auto ex = SymEngine::Expression(solution);
+                auto exprRep = symcomp::ExprRep(ex);
 
-            solutions.push_back(exprRep);
+                realSolutions.push_back(exprRep);
+            }
         }
         
-        return solutions;
+        return realSolutions;
     }
 
     symcomp::ExprRep Differentiate(const std::string& what, const std::string& var)

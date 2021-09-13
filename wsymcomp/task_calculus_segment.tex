@@ -1,0 +1,89 @@
+\documentclass[answers, a4paper, 10pt]{exam}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{fillbetween}
+
+\usepackage{luacode}
+
+% THIS IS WHERE SYMBOLIC COMPUTATION & RANDOMIZATION HAPPENS
+\begin{luacode}
+    symcomp = require "wsymcomp"
+
+    --f = symcomp.expr("x**2")
+    --g = symcomp.expr("-2*x+8")
+        
+    --f = symcomp.expr("1/2*x**2")
+    --g = symcomp.expr("x+4")
+    
+    f = symcomp.expr("2*x**2")
+    g = symcomp.expr("2*x+4")
+
+    points = symcomp.findintersections(f, g, "x")
+
+    p1 = points[1]
+    p2 = points[2]
+
+    gsubf = symcomp.sub(g, f)
+
+    area = symcomp.integrate(gsubf, p1, p2, "x")
+\end{luacode}
+
+% THESE WILL BE REFACTORED INTO AN OWN LATEX PACKAGE
+\newcommand{\scprint}[1]{\luaexec{tex.print{symcomp.getstringlatex(#1)}}}
+\newcommand{\print}[1]{\luaexec{tex.print{#1}}}
+\newcommand{\printintegral}[4]{\luaexec{tex.print{symcomp.printintegral(#1, #2, #3, #4)}}}
+
+\begin{document}
+
+\begin{questions}
+
+% BASED ON INTEGRALRECHNUNG AUFGABE 2. ON PAGE 5
+\question[k]
+How big is the parabolic segment between the parabola $f(x)=\scprint{f}$ and the line $g(x)=\scprint{g}$?
+
+Sketch a graph to visualize the desired area.
+\begin{solution}
+\print{symcomp.printintersections(f, g, "x")}
+Thus, the area is
+\begin{equation*}
+    A=\printintegral{"g(x)-f(x)"}{p1}{p2}{"x"}=
+      \printintegral{gsubf}{p1}{p2}{"x"}=
+      \left[\scprint{gsubf}\right]_{\scprint{p1}}^{\scprint{p2}}=
+      \scprint{area}
+\end{equation*}
+%
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = center,
+    xlabel = $x$,
+    ylabel = $y$,
+    enlargelimits,
+    samples = 100,
+    enlargelimits,
+    no markers,
+    legend pos=outer north east
+]
+
+\begin{luacode*}
+    tex.print("\\addplot[name path=P] {" .. symcomp.getstringpgf(f) .. "};")
+    tex.print("\\addlegendentry{$f(x)=" .. symcomp.getstringlatex(f) .. "$}")
+    tex.print("\\addplot[name path=L, dashed] {" .. symcomp.getstringpgf(g) .. "};")
+    tex.print("\\addlegendentry{$g(x)=" .. symcomp.getstringlatex(g) .. "$}")
+
+    tex.print("\\addplot[gray, fill opacity=0.25] fill between[of=P and L, soft clip={domain=" .. symcomp.getstringpgf(p1) .. ":" .. symcomp.getstringpgf(p2) .. "}];")
+\end{luacode*}
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{solution}
+
+\end{questions}
+
+\end{document}
