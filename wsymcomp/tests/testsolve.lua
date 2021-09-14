@@ -1,4 +1,6 @@
-package.cpath = package.cpath .. ";../symcomp/bin/?.so"
+package.path = package.path .. ";../?.lua"
+package.cpath = package.cpath .. ";../../symcomp/bin/?.so"
+
 local symcomp = require "wsymcomp"
 
 -- test wsymcomp.solve

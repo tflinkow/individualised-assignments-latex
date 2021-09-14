@@ -9,27 +9,41 @@
 \usepgfplotslibrary{fillbetween}
 
 \usepackage{luacode}
+\usepackage{luapackageloader}
+
+\begin{luacode*}
+    package.path = package.path .. ";../random/?.lua;"
+    package.cpath = package.cpath .. ";../symcomp/bin/?.so"
+\end{luacode*}
 
 % THIS IS WHERE SYMBOLIC COMPUTATION & RANDOMIZATION HAPPENS
 \begin{luacode}
     symcomp = require "wsymcomp"
+    random = require "random"
 
-    --f = symcomp.expr("x**2")
-    --g = symcomp.expr("-2*x+8")
-        
-    --f = symcomp.expr("1/2*x**2")
-    --g = symcomp.expr("x+4")
-    
-    f = symcomp.expr("2*x**2")
-    g = symcomp.expr("2*x+4")
+    -- choose one of the combinations of { f, g }
+    possible = { { "x**2", "-2*x+8" }, { "1/2*x**2", "x+4" }, { "2*x**2", "2*x+4" } }
+    choice = random.oneof(possible)
+
+    f = symcomp.expr(choice[1])
+    g = symcomp.expr(choice[2])
+
+    -- or:
+    -- f = symcomp.expr(random.parabola())
+    -- g = symcomp.expr(random.slope())
 
     points = symcomp.findintersections(f, g, "x")
 
+    assert(#points == 2, "expected two intersection points")
+
+    -- get the points of intersections, where p1.x < p2.x
     p1 = points[1]
     p2 = points[2]
 
+    -- subtract f(x) from g(x)
     gsubf = symcomp.sub(g, f)
 
+    -- integrate g(x)-f(x) between the intersection points
     area = symcomp.integrate(gsubf, p1, p2, "x")
 \end{luacode}
 
@@ -48,6 +62,7 @@ How big is the parabolic segment between the parabola $f(x)=\scprint{f}$ and the
 
 Sketch a graph to visualize the desired area.
 \begin{solution}
+% This is an example of a reusable text snippet: it will print the points where the functions intersect.
 \print{symcomp.printintersections(f, g, "x")}
 Thus, the area is
 \begin{equation*}
@@ -70,6 +85,7 @@ Thus, the area is
     legend pos=outer north east
 ]
 
+% this code is moved to Lua because \addplot does not expand its arguments
 \begin{luacode*}
     tex.print("\\addplot[name path=P] {" .. symcomp.getstringpgf(f) .. "};")
     tex.print("\\addlegendentry{$f(x)=" .. symcomp.getstringlatex(f) .. "$}")
