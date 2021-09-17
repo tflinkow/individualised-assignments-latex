@@ -1,0 +1,122 @@
+\documentclass[answers, a4paper, 10pt]{exam}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{fillbetween}
+
+\usepackage{luacode}
+\usepackage{luapackageloader}
+
+\begin{luacode*}
+    package.path = package.path .. ";../../random/?.lua;../../wsymcomp/?.lua"
+    package.cpath = package.cpath .. ";../../symcomp/bin/?.so"
+\end{luacode*}
+
+% THIS IS WHERE SYMBOLIC COMPUTATION & RANDOMIZATION HAPPENS
+\begin{luacode*}
+    symcomp = require "wsymcomp"
+    random = require "random"
+
+    local factory = 
+    {
+        { "a", random.integer() },
+        { "b", random.integer() }
+    }
+
+    random.create("a*x**3+b*x**2", factory)
+
+    -- if f(x)=a*x^3+b*x^2 we can ensure that
+    -- f has zero x=0 (multiplicity 2)
+    -- f has zero x=b/a (multiplicity 1)
+    f = symcomp.expr(random.create("a*x**3+b*x**2", factory))
+
+    d1 = symcomp.diff(f, "x")
+    d2 = symcomp.diff(d1, "x")
+    d3 = symcomp.diff(d2, "x")
+
+    -- TODO: zeros, min, max, inflections?
+    fzeros = symcomp.solve(f, "x")
+\end{luacode*}
+
+% THESE WILL BE REFACTORED INTO AN OWN LATEX PACKAGE
+\newcommand{\scprint}[1]{\luaexec{tex.print{symcomp.getstringlatex(#1)}}}
+\newcommand{\print}[1]{\luaexec{tex.print{#1}}}
+\newcommand{\printintegral}[4]{\luaexec{tex.print{symcomp.printintegral(#1, #2, #3, #4)}}}
+
+\begin{document}
+
+\begin{questions}
+
+% BASED ON DIFFERENTIALRECHNUNG AUFGABE 12. ON PAGE 5
+% \footnote{Arbeitsheft zur Vorlesung Ingenieurmathematik -- Differentialrechnung: Aufgabe 12 \textbullet, S. 5}
+\question[k]
+Given the function
+\begin{equation*}
+    f(x)=\scprint{f}
+\end{equation*}
+\begin{parts}
+\part
+Sketch $f, f'$ and $f''$ in one coordinate system.
+
+\part Identify all of the minimum and maximum points and find its inflection points.
+\end{parts}
+\begin{solution}
+\begin{parts}
+\part
+First, calculate the derivatives
+\begin{align*}
+    f(x)&=\scprint{f}\\
+    f'(x)&=\scprint{d1}\\
+    f''(x)&=\scprint{d2}\\
+    f'''(x)&=\scprint{d3}
+\end{align*}
+%
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = center,
+    xlabel = $x$,
+    ylabel = $y$,
+    %ymin = -10,
+    %ymax = 10,
+    %xmin = -10,
+    %xmax = 10,
+    enlargelimits,
+    samples = 200,
+    enlargelimits,
+    no markers,
+    legend pos=outer north east
+]
+
+% this code is moved to Lua because \addplot does not expand its arguments
+\begin{luacode*}
+    tex.print("\\addplot{" .. symcomp.getstringpgf(f) .. "};")
+    tex.print("\\addlegendentry{$f(x)$}")
+    tex.print("\\addplot{" .. symcomp.getstringpgf(d1) .. "};")
+    tex.print("\\addlegendentry{$f'(x)$}")
+    tex.print("\\addplot{" .. symcomp.getstringpgf(d2) .. "};")
+    tex.print("\\addlegendentry{$f''(x)$}")
+\end{luacode*}
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\part
+The function $f$ has the double zero $x_0=0$ and the single zero $x_1=\frac{3}{2}$.
+
+The first derivative has zeros $x_2=0$ and $x_3=1$.
+
+Because $f''(x_2)>0$ there is a maximum at $(0, 0)$ and because of $f''(x_3)>0$ there is a minimum at $(1, -1)$.
+
+The second derivative has a zero $x_4=\frac{1}{2}$. Because $f'''(x_4)\neq 0$ there is an inflection point at $(\frac{1}{2},-\frac{1}{2})$.
+\end{parts}
+\end{solution}
+
+\end{questions}
+
+\end{document}

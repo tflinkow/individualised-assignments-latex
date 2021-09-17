@@ -1,73 +1,33 @@
 local random = random or {}
 
+random.MIN_INT = -10
+random.MAX_INT = 10
+random.MIN_REAL = -1
+random.MAX_REAL = 1
+
 math.randomseed(os.time())
 
--- returns a randomized expression, where certain characters are replaced according to the supplied table
 function random.create(e, factory)
     assert(type(factory) == "table")
 
     for _, v in pairs(factory) do
-        e = e:gsub(v[1], v[2])
+        e = string.gsub(e, v[1], v[2])
     end
 
     return e
 end
 
--- returns a parabola ax^2+b with rational a and user-specified b or integer b, if none supplied
-function random.parabola(b)
-    local factory = 
-    {
-        { "a", random.rational() },
-        { "b", b or random.integer(-6, 7) }
-    }
-
-    return random.create("a*x**2+b", factory)
-end
-
--- returns a line mx+b with rational m and user-specified b or integer b, if none supplied
-function random.line()
-    local factory =
-    {
-        { "m", random.rational() },
-        { "b", b or random.integer(-10, 11) }
-    }
-
-    return random.create("m*x+b", factory)
-end
-
--- returns a polynomial with the specified max degree and integer coefficients
-function random.polynomial(deg)
-    local ex = ""
-
-    for i = 0, deg do
-        --power = random.integer(0, i)
-        power = i
-        coeff = random.integer(-10, 10)
-        
-        if coeff >= 0 then
-            ex = ex .. "+"
-        end
-
-        ex = ex .. coeff .. "*x**(" .. power .. ")"
-    end
-
-    return ex
-end
-
--- returns a randomly chosen table entry
 function random.oneof(t)
     assert(type(t) == "table")
 
     return t[math.random(1, #t)]
 end
 
--- returns a random float number between [a, b)
-function random.real(a, b)
-    return a + (b - a) * math.random()
+function random.integer(a, b)
+    return math.random(a or random.MIN_INT, b or random.MAX_INT)
 end
 
--- returns a random rational number between [0, 1]
-function random.rational()
+function random.rational() -- TODO: allow range specification! allow neg. fractions
     a = random.integer(1, 15)
     b = random.integer(1, 15)
 
@@ -80,9 +40,47 @@ function random.rational()
     end
 end
 
--- returns a random integer number between [a, b)
-function random.integer(a, b)
-    return math.random(a, b)
+function random.real(a, b)
+    l = a or random.MIN_REAL
+    u = b or random.MAX_REAL
+
+    return l + (u - l) * math.random()
+end
+
+function random.line(m, b)
+    local factory =
+    {
+        { "m", m or random.rational() },
+        { "b", b or random.integer() }
+    }
+
+    return random.create("m*x+b", factory)
+end
+
+function random.parabola(a, b)
+    local factory = 
+    {
+        { "a", a or random.rational() }
+    }
+
+    return random.create("a*x**2", factory)
+end
+
+function random.polynomial(deg)
+    local ex = ""
+
+    for i = 0, deg do
+        power = i
+        coeff = random.integer()
+        
+        if coeff >= 0 then
+            ex = ex .. "+"
+        end
+
+        ex = ex .. coeff .. "*x**(" .. power .. ")"
+    end
+
+    return ex
 end
 
 return random

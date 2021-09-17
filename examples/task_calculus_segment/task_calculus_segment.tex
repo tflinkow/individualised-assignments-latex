@@ -12,12 +12,12 @@
 \usepackage{luapackageloader}
 
 \begin{luacode*}
-    package.path = package.path .. ";../random/?.lua;"
-    package.cpath = package.cpath .. ";../symcomp/bin/?.so"
+    package.path = package.path .. ";../../random/?.lua;../../wsymcomp/?.lua"
+    package.cpath = package.cpath .. ";../../symcomp/bin/?.so"
 \end{luacode*}
 
 % THIS IS WHERE SYMBOLIC COMPUTATION & RANDOMIZATION HAPPENS
-\begin{luacode}
+\begin{luacode*}
     symcomp = require "wsymcomp"
     random = require "random"
 
@@ -45,7 +45,7 @@
 
     -- integrate g(x)-f(x) between the intersection points
     area = symcomp.integrate(gsubf, p1, p2, "x")
-\end{luacode}
+\end{luacode*}
 
 % THESE WILL BE REFACTORED INTO AN OWN LATEX PACKAGE
 \newcommand{\scprint}[1]{\luaexec{tex.print{symcomp.getstringlatex(#1)}}}

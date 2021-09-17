@@ -84,6 +84,35 @@ extern "C"
 
         return result.ReturnToLua(L);
     }
+    
+    int debug_randint(int a, int b)
+    {
+        return a + (rand() % static_cast<int>(b - a + 1));
+    }
+
+    LIBSYMCOMP_REGISTER_LUAFUNC(debug_randompolynomial, L, 1)
+        
+        auto maxdegree = luaL_checknumber(L, -1);
+
+        std::ostringstream oss;
+
+        for (int i = 0; i <= maxdegree; i++)
+        {
+            int power = i;
+            int coeff = debug_randint(-10, 10);
+
+            if (coeff >= 0)
+            {
+                oss << "+";
+            }
+
+            oss << coeff << "*x**(" << power << ")";
+        }
+
+        lua_pushstring(L, oss.str().c_str());
+
+        return 1;
+    }
 
     LIBSYMCOMP_BEGIN_LUAMODULE(functions)
         LIBSYMCOMP_LUAMODULE_REGISTER(expr),
@@ -92,6 +121,7 @@ extern "C"
         LIBSYMCOMP_LUAMODULE_REGISTER(sub),
         LIBSYMCOMP_LUAMODULE_REGISTER(diff),
         LIBSYMCOMP_LUAMODULE_REGISTER(integrate),
+        LIBSYMCOMP_LUAMODULE_REGISTER(debug_randompolynomial),
     LIBSYMCOMP_END_LUAMODULE
 
 [[maybe_unused]] int luaopen_symcomp(lua_State* L)
