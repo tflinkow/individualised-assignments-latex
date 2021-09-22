@@ -107,9 +107,12 @@ First, calculate the derivatives
 \end{center}
 
 \part
-The function $f$ has the double zero $x_0=0$ and the single zero $x_1=\frac{3}{2}$.
+%The function $f$ has the double zero $x_0=0$ and the single zero $x_1=\frac{3}{2}$.
+\scprint{symcomp.printzeros(f, "x")}
+%The first derivative has zeros $x_2=0$ and $x_3=1$.
+\scprint{symcomp.printzeros(d1, "x", "$f'$")}
 
-The first derivative has zeros $x_2=0$ and $x_3=1$.
+\scprint{symcomp.printminmax(f, "x")}
 
 Because $f''(x_2)>0$ there is a maximum at $(0, 0)$ and because of $f''(x_3)>0$ there is a minimum at $(1, -1)$.
 

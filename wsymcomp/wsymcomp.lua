@@ -42,9 +42,19 @@ function requirestringdisplay(x)
     end
 end
 
+function fractiontonumber(x)
+    -- turn '-1/2' into (-1) divided by (2) etc.
+    idx = x:find("/")
+    return tonumber(x:sub(1, idx - 1)) / tonumber(x:sub(idx + 1, #x))
+end
+
 function requirenumber(x)
     if type(x) == "string" then
-        return tonumber(x)
+        if x:find("/") then
+            return fractiontonumber(x)
+        else
+            return tonumber(x)
+        end
     elseif type(x) == "table" then
         if #x == 2 then
             return tonumber(basic(x))
@@ -161,6 +171,84 @@ function wsymcomp.printintersections(f, g, x)
         end
 
         pretty = pretty .. "$P_" .. k .. "(" .. latex(v) .. "," .. latex(y) .. ")^T$"
+    end
+
+    return pretty .. "."
+end
+
+function wsymcomp.printzeros(f, fname, x, startidx) -- startidx opt
+    assert(type(x) == "string")
+
+    startidx = startidx or 0
+
+    zeros = wsymcomp.solve(f, x)
+
+    pretty = "The function $" .. fname .. "$"
+
+    if #zeros == 0 then
+        pretty = pretty .. " does not have zeros"
+    elseif #zeros == 1 then
+        pretty = pretty .. " has a zero at "
+    else
+        pretty = pretty .. " has zeros at "
+    end
+
+    for k, v in pairs(zeros) do
+        if k == 1 then
+        
+        elseif k == #zeros then
+            pretty = pretty .. " and at "
+        else
+            pretty = pretty .. ", "
+        end
+
+        pretty = pretty .. "$" .. x .. "_" .. k + startidx .. "=" .. latex(v) .. "$"
+    end
+
+    return pretty .. "."
+end
+
+function wsymcomp.printminmax(f, fname, x)
+    assert(type(x) == "string")
+
+    diff1 = wsymcomp.diff(f, x)
+    diff2 = wsymcomp.diff(diff1, x)
+    zeros = wsymcomp.solve(diff1, x)
+
+    fzeros = wsymcomp.solve(f, x) -- this is needed for correct indices
+
+    pretty = "The function $" .. fname .. "$"
+
+    if #zeros == 0 then
+        pretty = pretty .. " does not have extremal points"
+    else
+        pretty = pretty .. " has"
+    end
+
+    for k, v in pairs(zeros) do
+        y = wsymcomp.evalAt(diff2, x, basic(v))
+
+        if k == 1 then
+        
+        elseif k == #zeros then
+            pretty = pretty .. " and"
+        else
+            pretty = pretty .. ","
+        end
+
+        if tonumber(basic(y)) > 0 then
+            pretty = pretty .. " a minimum"
+        else -- todo: if == 0 then check inflection
+            pretty = pretty .. " a maximum"
+        end
+
+        pretty = pretty .. " at $(" .. latex(v) .. "," .. latex(y) ..")$ because $" .. fname .. "''(" .. x .. "_" .. k + #fzeros .. ")"
+
+        if tonumber(basic(y)) > 0 then
+            pretty = pretty .. " > 0$"
+        else -- todo: if == 0 then check inflection
+            pretty = pretty .. " < 0$"
+        end
     end
 
     return pretty .. "."
