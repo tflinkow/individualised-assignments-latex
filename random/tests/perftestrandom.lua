@@ -4,18 +4,22 @@ package.cpath = package.cpath .. ";../../symcomp/bin/?.so"
 local random = require "random"
 local symcomp = require "symcomp"
 
-start = os.clock()
+function run(deg, func, iterations)
+    start = os.clock()
 
-for i=1, 1000000 do
-    random.polynomial(15)
+    for i=1, iterations do
+        func(deg)
+    end
+
+    return os.clock() - start
 end
 
-print("Lua: " .. os.clock() - start)
+local cases = { 5, 50, 500, 5000, 50000 }
+local iterations = 10000
+local funcs = { { "Lua", random.polynomial }, { "C++", symcomp.debug_randompolynomial } }
 
-start = os.clock()
-
-for i=1, 1000000 do
-    symcomp.debug_randompolynomial(15)
+for k, v in ipairs(cases) do
+    for _, x in ipairs(funcs) do
+        print("["..x[1].."] deg(p)="..v.." took "..run(v, x[2], iterations).."s ("..iterations.." iterations)")
+    end
 end
-
-print("C++: " .. os.clock() - start)
