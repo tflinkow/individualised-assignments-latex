@@ -29,7 +29,7 @@ random.MAX_REAL = 1
 
 ---
 
-## `random.create()` - create any randomized expression
+## `random.create(e, t)` - create any randomized expression
 
 > `random.create` can be used to create any mathematical expression with user-specified constraints on parameters.
 
