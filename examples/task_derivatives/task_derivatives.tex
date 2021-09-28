@@ -81,8 +81,8 @@ First, calculate the derivatives
     axis lines = center,
     xlabel = $x$,
     ylabel = $y$,
-    %ymin = -10,
-    %ymax = 10,
+    ymin = -10, % TODO: are these okay because they are random.MAX_INT etc.?
+    ymax = 10,
     %xmin = -10,
     %xmax = 10,
     enlargelimits,
@@ -107,16 +107,17 @@ First, calculate the derivatives
 \end{center}
 
 \part
-%The function $f$ has the double zero $x_0=0$ and the single zero $x_1=\frac{3}{2}$.
-\scprint{symcomp.printzeros(f, "x")}
-%The first derivative has zeros $x_2=0$ and $x_3=1$.
-\scprint{symcomp.printzeros(d1, "x", "$f'$")}
+% zeros of f
+\scprint{symcomp.printzeros(f, "f", "x")}
+% zeros of first diff
+\scprint{symcomp.printzeros(d1, "f'", "x", 2)}
+% min max based on zeros of first diff
+\scprint{symcomp.printminmax(f, "f", "x")}
 
-\scprint{symcomp.printminmax(f, "x")}
+% TODO: inflection points
+%Because $f''(x_2)>0$ there is a maximum at $(0, 0)$ and because of $f''(x_3)>0$ there is a minimum at $(1, -1)$.
 
-Because $f''(x_2)>0$ there is a maximum at $(0, 0)$ and because of $f''(x_3)>0$ there is a minimum at $(1, -1)$.
-
-The second derivative has a zero $x_4=\frac{1}{2}$. Because $f'''(x_4)\neq 0$ there is an inflection point at $(\frac{1}{2},-\frac{1}{2})$.
+%The second derivative has a zero $x_4=\frac{1}{2}$. Because $f'''(x_4)\neq 0$ there is an inflection point at $(\frac{1}{2},-\frac{1}{2})$.
 \end{parts}
 \end{solution}
 

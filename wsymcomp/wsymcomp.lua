@@ -127,8 +127,6 @@ function wsymcomp.getstringpgf(x)
 end
 
 function wsymcomp.findintersections(f, g, x)
-    assert(type(x) == "string")
-
     h = wsymcomp.sub(f, g)
     intersections = wsymcomp.solve(h, x)
 
@@ -136,8 +134,6 @@ function wsymcomp.findintersections(f, g, x)
 end
 
 function wsymcomp.printintersections(f, g, x)
-    assert(type(x) == "string")
-
     h = wsymcomp.sub(f, g)
     intersections = wsymcomp.solve(h, x)
 
@@ -168,8 +164,6 @@ function wsymcomp.printintersections(f, g, x)
 end
 
 function wsymcomp.printzeros(f, fname, x, startidx) -- startidx opt
-    assert(type(x) == "string")
-
     startidx = startidx or 0
 
     zeros = wsymcomp.solve(f, x)
@@ -193,15 +187,13 @@ function wsymcomp.printzeros(f, fname, x, startidx) -- startidx opt
             pretty = pretty .. ", "
         end
 
-        pretty = pretty .. "$" .. x .. "_" .. k + startidx .. "=" .. latex(v) .. "$"
+        pretty = pretty .. "$" .. requirestringdisplay(x) .. "_" .. k + startidx .. "=" .. latex(v) .. "$"
     end
 
     return pretty .. "."
 end
 
 function wsymcomp.printminmax(f, fname, x)
-    assert(type(x) == "string")
-
     diff1 = wsymcomp.diff(f, x)
     diff2 = wsymcomp.diff(diff1, x)
     zeros = wsymcomp.solve(diff1, x)
@@ -233,7 +225,7 @@ function wsymcomp.printminmax(f, fname, x)
             pretty = pretty .. " a maximum"
         end
 
-        pretty = pretty .. " at $(" .. latex(v) .. "," .. latex(y) ..")$ because $" .. fname .. "''(" .. x .. "_" .. k + #fzeros .. ")"
+        pretty = pretty .. " at $(" .. latex(v) .. "," .. latex(y) ..")$ because $" .. fname .. "''(" .. requirestringdisplay(x) .. "_" .. k + #fzeros .. ")"
 
         if tonumber(basic(y)) > 0 then
             pretty = pretty .. " > 0$"
@@ -246,9 +238,7 @@ function wsymcomp.printminmax(f, fname, x)
 end
 
 function wsymcomp.printintegral(f, u, l, x)
-    assert(type(x) == "string")
-
-    return "\\int_{" .. requirestringdisplay(u) .. "}^{" .. requirestringdisplay(l) .. "}{" .. requirestringdisplay(f) .. "}\\,\\mathrm{d}" .. x    
+    return "\\int_{" .. requirestringdisplay(u) .. "}^{" .. requirestringdisplay(l) .. "}{" .. requirestringdisplay(f) .. "}\\,\\mathrm{d}" .. requirestringdisplay(x)    
 end
 
 return wsymcomp
