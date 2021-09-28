@@ -142,32 +142,34 @@ res = wsymcomp.diff(f, "x")
 
 ---
 
-## `wsymcomp.integrate(f, x, l, u)` - integrates `f` from `l` to `u` with respect to `x`
+## `wsymcomp.integrate(f, x [, l , u])` - integrates `f` from `l` to `u` with respect to `x`
 
-> numerically evaluates the integral of `f` from `l` to `u` with respect to `x`.
+> evaluates the integral of `f` from `l` to `u` with respect to `x`.
 
 > **⚠️ Warning:**<br/>
 > As of now, `f` must be a polynomial. Other types of functions can not be evaluated yet.
-> Further, the limits `l` and `u` must also be supplied. This will change in the future, when indefinite integrals are supported.
 
 ### Signature
 
 ```lua
+res = wsymcomp.integrate(f, x)
 res = wsymcomp.integrate(f, x, l, u)
 ```
 
 ### Example
 
 ```lua
-f = wsymcomp.expr("1/2*x^2")
+f = wsymcomp.expr("1/3*x^2")
 l = 0
 u = 3
 
-res = wsymcomp.integrate(f, "x", l, u)
+wsymcomp.integrate(f, "x")
+wsymcomp.integrate(f, "x", l, u)
 ```
 
 #### Output (`res[1]`)
 
 ```ini
-4.5
+x^3/9
+3
 ```
