@@ -73,58 +73,15 @@ extern "C"
         return result.ReturnToLua(L);
     }
 
-    LIBSYMCOMP_REGISTER_LUAFUNC(integrate, L, 4)
-        
-        auto var = luaL_checkstring(L, -1);
-        auto upper = luaL_checknumber(L, -2);
-        auto lower = luaL_checknumber(L, -3);
-        auto what = luaL_checkstring(L, -4);
-
-        auto result = symcomp::Integrate(what, lower, upper, var);
-
-        return result.ReturnToLua(L);
-    }
-    
-    int debug_randint(int a, int b)
-    {
-        return a + (rand() % static_cast<int>(b - a + 1));
-    }
-
-    LIBSYMCOMP_REGISTER_LUAFUNC(debug_randompolynomial, L, 1)
-        
-        auto maxdegree = luaL_checknumber(L, -1);
-
-        std::ostringstream oss;
-
-        for (int i = 0; i <= maxdegree; i++)
-        {
-            int power = i;
-            int coeff = debug_randint(-10, 10);
-
-            if (coeff >= 0)
-            {
-                oss << "+";
-            }
-
-            oss << coeff << "*x**(" << power << ")";
-        }
-
-        lua_pushstring(L, oss.str().c_str());
-
-        return 1;
-    }
-
     LIBSYMCOMP_BEGIN_LUAMODULE(functions)
         LIBSYMCOMP_LUAMODULE_REGISTER(expr),
         LIBSYMCOMP_LUAMODULE_REGISTER(evalAt),
         LIBSYMCOMP_LUAMODULE_REGISTER(solve),
         LIBSYMCOMP_LUAMODULE_REGISTER(sub),
         LIBSYMCOMP_LUAMODULE_REGISTER(diff),
-        LIBSYMCOMP_LUAMODULE_REGISTER(integrate),
-        LIBSYMCOMP_LUAMODULE_REGISTER(debug_randompolynomial),
     LIBSYMCOMP_END_LUAMODULE
 
-[[maybe_unused]] int luaopen_symcomp(lua_State* L)
+[[maybe_unused]] int luaopen_wsymengine(lua_State* L)
     {        
         Expects(L != nullptr);
         

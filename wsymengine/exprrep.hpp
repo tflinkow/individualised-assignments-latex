@@ -1,8 +1,6 @@
 #ifndef LIBSYMCOMP_EXPRREP_HPP
 #define LIBSYMCOMP_EXPRREP_HPP
 
-#include <ginac/ginac.h>
-
 #include <symengine/expression.h>
 #include <symengine/parser.h>
 
@@ -31,7 +29,6 @@ namespace symcomp
         explicit ExprRep(const std::string& basic);
 
         explicit ExprRep(const SymEngine::Expression& expression);
-        explicit ExprRep(const GiNaC::ex& expression);
 
         int ReturnToLua(gsl::not_null<lua_State*> L) const;
     };

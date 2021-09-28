@@ -56,3 +56,7 @@ dkms.conf
 *.fls
 *.log
 *.gz
+wsymengine/.vscode/
+wsymengine/.idea/
+symcomp/.vscode/
+symcomp/.idea/

@@ -28,21 +28,8 @@ symcomp::ExprRep::ExprRep(const SymEngine::Expression& expression)
     *this = ExprRep(basic, laTeX);
 }
 
-symcomp::ExprRep::ExprRep(const GiNaC::ex& expression)
-{
-    std::ostringstream oss;
-    oss << expression;
-
-    *this = ExprRep(oss.str());
-}
-
 int symcomp::ExprRep::ReturnToLua(gsl::not_null<lua_State *> L) const
 {
-    // lua_pushstring(L, this->Basic.c_str());
-    // lua_pushstring(L, this->LaTeX.c_str());
-
-    // return 2;
-
     lua_newtable(L); // table @-1
     lua_pushstring(L, this->Basic.c_str()); // table @-2, string @-1
     lua_rawseti(L, -2, 1); // basic is table[1]
