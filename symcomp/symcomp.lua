@@ -18,11 +18,6 @@ function symcomp.diff(f, x)
     return wsymengine.diff(util.BasicStringFromAny(f), util.BasicStringFromAny(x))
 end
 
--- TODO: remove after perf test
-function symcomp.diff2(f, x)
-    return wsymmath.diff(util.BasicStringFromAny(f), util.BasicStringFromAny(x))
-end
-
 -- subtracts b from a (hence a - b)
 function symcomp.sub(a, b)
     return wsymengine.sub(util.BasicStringFromAny(a), util.BasicStringFromAny(b))
@@ -40,28 +35,12 @@ end
 
 -- TODO: call the appropriate util funcs
 function symcomp.getstringlatex(x)
-    if type(x) == "table" then
-        if #x == 2 then
-            return latex(x)
-        else
-            return x
-        end
-    else
-        return x
-    end
+    return util.LaTeXStringFromAny(x)
 end
 
 -- TODO: call the appropriate util funcs
 function symcomp.getstringpgf(x)
-    if type(x) == "table" then
-        if #x == 2 then
-            return basic(x):gsub("%*%*", "^")
-        else
-            return x
-        end
-    else
-        return x
-    end
+    return util.strings.CaretExponent(util.BasicStringFromAny(x))
 end
 
 function symcomp.findintersections(f, g, x)
@@ -86,7 +65,7 @@ function symcomp.printintersections(f, g, x)
 
     for k, v in pairs(intersections) do
         -- f or g does not matter, f(x0)=g(x0) where x0 is intersection
-        y = symcomp.evalAt(f, x, basic(v))
+        y = symcomp.evalAt(f, x, util.exprrep.Basic(v))
 
         if k == 1 then
         
@@ -96,7 +75,7 @@ function symcomp.printintersections(f, g, x)
             pretty = pretty .. ", "
         end
 
-        pretty = pretty .. "$P_" .. k .. "(" .. util.ExprRep.LaTeX(v) .. "," .. util.ExprRep.LaTeX(y) .. ")^T$"
+        pretty = pretty .. "$P_" .. k .. "(" .. util.exprrep.LaTeX(v) .. "," .. util.exprrep.LaTeX(y) .. ")^T$"
     end
 
     return pretty .. "."
@@ -127,7 +106,7 @@ function symcomp.printzeros(f, fname, x, startidx) -- startidx opt
             pretty = pretty .. ", "
         end
 
-        pretty = pretty .. "$" .. util.LaTeXStringFromAny(x) .. "_" .. k + startidx .. "=" .. util.ExprRep.LaTeX(v) .. "$"
+        pretty = pretty .. "$" .. util.LaTeXStringFromAny(x) .. "_" .. k + startidx .. "=" .. util.exprrep.LaTeX(v) .. "$"
     end
 
     return pretty .. "."
@@ -150,7 +129,7 @@ function symcomp.printminmax(f, fname, x)
     end
 
     for k, v in pairs(zeros) do
-        y = symcomp.evalAt(diff2, x, basic(v))
+        y = symcomp.evalAt(diff2, x, util.exprrep.Basic(v))
 
         if k == 1 then
         
@@ -160,15 +139,15 @@ function symcomp.printminmax(f, fname, x)
             pretty = pretty .. ","
         end
 
-        if tonumber(basic(y)) > 0 then
+        if tonumber(util.exprrep.Basic(y)) > 0 then
             pretty = pretty .. " a minimum"
         else -- todo: if == 0 then check inflection
             pretty = pretty .. " a maximum"
         end
 
-        pretty = pretty .. " at $(" .. latex(v) .. "," .. latex(y) ..")$ because $" .. fname .. "''(" .. requirestringdisplay(x) .. "_" .. k + #fzeros .. ")"
+        pretty = pretty .. " at $(" .. util.exprrep.LaTeX(v) .. "," .. util.exprrep.LaTeX(y) ..")$ because $" .. fname .. "''(" .. util.LaTeXStringFromAny(x) .. "_" .. k + #fzeros .. ")"
 
-        if tonumber(basic(y)) > 0 then
+        if tonumber(util.exprrep.Basic(y)) > 0 then
             pretty = pretty .. " > 0$"
         else -- todo: if == 0 then check inflection
             pretty = pretty .. " < 0$"
@@ -180,7 +159,7 @@ end
 
 -- TODO: move to snippets
 function symcomp.printintegral(f, u, l, x)
-    return "\\int_{" .. requirestringdisplay(u) .. "}^{" .. requirestringdisplay(l) .. "}{" .. requirestringdisplay(f) .. "}\\,\\mathrm{d}" .. requirestringdisplay(x)    
+    return "\\int_{" .. util.LaTeXStringFromAny(u) .. "}^{" .. util.LaTeXStringFromAny(l) .. "}{" .. util.LaTeXStringFromAny(f) .. "}\\,\\mathrm{d}" .. util.LaTeXStringFromAny(x)    
 end
 
 return symcomp

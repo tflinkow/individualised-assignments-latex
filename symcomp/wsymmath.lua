@@ -15,15 +15,6 @@ function Load(s)
     return load("return " .. util.strings.CaretExponent(s))()
 end
 
-function wsymmath.diff(f, x)
-    newF = Load(f)
-    newX = Load(x)
-
-    res = symmath.Derivative(newF, newX)()
-
-    return CreateExprRep(res)
-end
-
 function wsymmath.integrate(f, x, l, u)
     F = Load(f)
     X = Load(x)

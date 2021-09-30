@@ -1,0 +1,19 @@
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{fillbetween}
+
+\usepackage{luacode}
+\usepackage{luapackageloader}
+
+\begin{luacode*}
+    package.cpath = package.cpath .. ";./wsymengine/bin/?.so"
+    package.path = package.path .. ";./random/?.lua;./symcomp/?.lua"
+\end{luacode*}
+
+\newcommand{\scprint}[1]{\luaexec{tex.print{symcomp.getstringlatex(#1)}}}
+\newcommand{\print}[1]{\luaexec{tex.print{#1}}}
+\newcommand{\printintegral}[4]{\luaexec{tex.print{symcomp.printintegral(#1, #2, #3, #4)}}}

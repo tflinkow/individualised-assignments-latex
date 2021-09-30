@@ -1,24 +1,6 @@
-\documentclass[answers, a4paper, 10pt]{exam}
-
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-\usepackage{tikz}
-\usepackage{pgfplots}
-\pgfplotsset{compat=newest}
-\usepgfplotslibrary{fillbetween}
-
-\usepackage{luacode}
-\usepackage{luapackageloader}
-
-\begin{luacode*}
-    package.path = package.path .. ";../../random/?.lua;../../wsymcomp/?.lua"
-    package.cpath = package.cpath .. ";../../symcomp/bin/?.so"
-\end{luacode*}
-
 % THIS IS WHERE SYMBOLIC COMPUTATION & RANDOMIZATION HAPPENS
 \begin{luacode*}
-    symcomp = require "wsymcomp"
+    symcomp = require "symcomp"
     random = require "random"
 
     -- choose one of the combinations of { f, g }
@@ -46,15 +28,6 @@
     -- integrate g(x)-f(x) between the intersection points
     area = symcomp.integrate(gsubf, p1, p2, "x")
 \end{luacode*}
-
-% THESE WILL BE REFACTORED INTO AN OWN LATEX PACKAGE
-\newcommand{\scprint}[1]{\luaexec{tex.print{symcomp.getstringlatex(#1)}}}
-\newcommand{\print}[1]{\luaexec{tex.print{#1}}}
-\newcommand{\printintegral}[4]{\luaexec{tex.print{symcomp.printintegral(#1, #2, #3, #4)}}}
-
-\begin{document}
-
-\begin{questions}
 
 % BASED ON INTEGRALRECHNUNG AUFGABE 2. ON PAGE 5
 \question[k]
@@ -99,7 +72,3 @@ Thus, the area is
 \end{tikzpicture}
 \end{center}
 \end{solution}
-
-\end{questions}
-
-\end{document}

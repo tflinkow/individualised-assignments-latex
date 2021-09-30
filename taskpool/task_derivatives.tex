@@ -1,24 +1,6 @@
-\documentclass[answers, a4paper, 10pt]{exam}
-
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-\usepackage{tikz}
-\usepackage{pgfplots}
-\pgfplotsset{compat=newest}
-\usepgfplotslibrary{fillbetween}
-
-\usepackage{luacode}
-\usepackage{luapackageloader}
-
-\begin{luacode*}
-    package.path = package.path .. ";../../random/?.lua;../../wsymcomp/?.lua"
-    package.cpath = package.cpath .. ";../../symcomp/bin/?.so"
-\end{luacode*}
-
 % THIS IS WHERE SYMBOLIC COMPUTATION & RANDOMIZATION HAPPENS
 \begin{luacode*}
-    symcomp = require "wsymcomp"
+    symcomp = require "symcomp"
     random = require "random"
 
     local factory = 
@@ -41,15 +23,6 @@
     -- TODO: zeros, min, max, inflections?
     fzeros = symcomp.solve(f, "x")
 \end{luacode*}
-
-% THESE WILL BE REFACTORED INTO AN OWN LATEX PACKAGE
-\newcommand{\scprint}[1]{\luaexec{tex.print{symcomp.getstringlatex(#1)}}}
-\newcommand{\print}[1]{\luaexec{tex.print{#1}}}
-\newcommand{\printintegral}[4]{\luaexec{tex.print{symcomp.printintegral(#1, #2, #3, #4)}}}
-
-\begin{document}
-
-\begin{questions}
 
 % BASED ON DIFFERENTIALRECHNUNG AUFGABE 12. ON PAGE 5
 % \footnote{Arbeitsheft zur Vorlesung Ingenieurmathematik -- Differentialrechnung: Aufgabe 12 \textbullet, S. 5}
@@ -120,7 +93,3 @@ First, calculate the derivatives
 %The second derivative has a zero $x_4=\frac{1}{2}$. Because $f'''(x_4)\neq 0$ there is an inflection point at $(\frac{1}{2},-\frac{1}{2})$.
 \end{parts}
 \end{solution}
-
-\end{questions}
-
-\end{document}
