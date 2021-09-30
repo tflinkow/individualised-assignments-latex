@@ -83,37 +83,4 @@ function random.polynomial(deg)
     return ex
 end
 
-function newStack()
-    return {""}
-end
-
-function addString(stack, s)
-    table.insert(stack, s)
-    
-    for i=#stack-1, 1, -1 do
-        if string.len(stack[i]) > string.len(stack[i+1]) then
-            break
-        end
-        
-        stack[i] = stack[i] .. table.remove(stack)
-    end
-end
-
-function random.polynomial2(deg)
-    local s = newStack()
-
-    for i = 0, deg do
-        power = i
-        coeff = random.integer()
-        
-        if coeff >= 0 then
-            addString(s, "+")
-        end
-
-        addString(s, "*x**(" .. power .. ")")        
-    end
-
-    return table.concat(s)
-end
-
 return random

@@ -4,6 +4,7 @@ local util = require "util"
 local wsymengine = require "wsymengine"
 local wsymmath = require "wsymmath"
 
+-- creates a table representing a mathematical expression as an ExprRep object
 function symcomp.expr(e)
     return wsymengine.expr(e) -- no typecheck here, as actual will do that
 end
@@ -33,16 +34,17 @@ function symcomp.integrate(f, x, l, u)
     return wsymmath.integrate(util.BasicStringFromAny(f), util.BasicStringFromAny(x), util.BasicStringFromAny(l), util.BasicStringFromAny(u))
 end
 
--- TODO: call the appropriate util funcs
+-- returns a string which can be used by LaTeX
 function symcomp.getstringlatex(x)
-    return util.LaTeXStringFromAny(x)
+    return util.strings.CaretExponent(util.LaTeXStringFromAny(x))
 end
 
--- TODO: call the appropriate util funcs
+-- returns a string that can be used by TikZ/PGFplots
 function symcomp.getstringpgf(x)
     return util.strings.CaretExponent(util.BasicStringFromAny(x))
 end
 
+-- finds the points of intersections between f and g
 function symcomp.findintersections(f, g, x)
     h = symcomp.sub(f, g)
     intersections = symcomp.solve(h, x)
@@ -50,7 +52,7 @@ function symcomp.findintersections(f, g, x)
     return intersections
 end
 
--- TODO: move to snippets
+-- returns a string which lists the points of intersections
 function symcomp.printintersections(f, g, x)
     h = symcomp.sub(f, g)
     intersections = symcomp.solve(h, x)
@@ -81,7 +83,7 @@ function symcomp.printintersections(f, g, x)
     return pretty .. "."
 end
 
--- TODO: move to snippets
+-- returns a string which lists the zeros of a function
 function symcomp.printzeros(f, fname, x, startidx) -- startidx opt
     startidx = startidx or 0
 
@@ -112,7 +114,7 @@ function symcomp.printzeros(f, fname, x, startidx) -- startidx opt
     return pretty .. "."
 end
 
--- TODO: move to snippets
+-- returns a string listing the minimums and maximums of a function
 function symcomp.printminmax(f, fname, x)
     diff1 = symcomp.diff(f, x)
     diff2 = symcomp.diff(diff1, x)
@@ -157,9 +159,13 @@ function symcomp.printminmax(f, fname, x)
     return pretty .. "."
 end
 
--- TODO: move to snippets
-function symcomp.printintegral(f, u, l, x)
-    return "\\int_{" .. util.LaTeXStringFromAny(u) .. "}^{" .. util.LaTeXStringFromAny(l) .. "}{" .. util.LaTeXStringFromAny(f) .. "}\\,\\mathrm{d}" .. util.LaTeXStringFromAny(x)    
+-- returns a string which contains the integral specified
+function symcomp.printintegral(f, x, u, l)
+    if u == nil and l == nil then
+        return "\\int{" .. util.LaTeXStringFromAny(f) .. "}\\,\\mathrm{d}" .. util.LaTeXStringFromAny(x)        
+    else
+        return "\\int_{" .. util.LaTeXStringFromAny(u) .. "}^{" .. util.LaTeXStringFromAny(l) .. "}{" .. util.LaTeXStringFromAny(f) .. "}\\,\\mathrm{d}" .. util.LaTeXStringFromAny(x)    
+    end
 end
 
 return symcomp
