@@ -15,13 +15,18 @@
 
 namespace symcomp::util
 {
-    // Creates a SymEngine::Expression by parsing the supplied string.
+    /// Creates a \c SymEngine::Expression from the specified string \p str.
+    /// \param str The string containing a mathematical expression.
+    /// \return A \c SymEngine::Expression.
     inline SymEngine::Expression StringToSymEngineExpression(const std::string& str)
     {
         return {SymEngine::parse(str) };
     }
 
-    // Returns a SymEngine::Integer if the specified value is a whole number (such as 4.0 or 7.0) and SymEngine::Number otherwise.
+    /// Returns a \c SymEngine::Integer if the specified value is a whole number (e.g. 4.0 or 7.0) and returns a
+    /// \c SymEngine::Number otherwise.
+    /// \param a The number.
+    /// \return A \c SymEngine::Number which might be a \c SymEngine::Integer.
     inline SymEngine::RCP<const SymEngine::Number> TryToInt(double a)
     {
         // https://stackoverflow.com/a/26343165/7571171
@@ -33,7 +38,10 @@ namespace symcomp::util
         return SymEngine::number(a);
     }
 
-    // Checks whether the Lua function was called with the specified number of parameters and calls luaL_error if it was not.
+    /// Throws an error if the Lua function \p function was not called with the expected number of parameters.
+    /// \param L The Lua stack.
+    /// \param function The function called.
+    /// \param expected The expected number of parameters.
     inline void LuaAssertParamCount(lua_State* L, const std::string& function, int expected)
     {
         auto actual = lua_gettop(L);
@@ -45,25 +53,6 @@ namespace symcomp::util
 
             luaL_error(L, oss.str().c_str());
         }
-    }
-
-    // https://stackoverflow.com/a/24315631/7571171
-    inline std::string ReplaceAll(std::string source, const std::string& what, const std::string& with)
-    {
-        auto start = 0;
-
-        while ((start = source.find(what, start)) != std::string::npos)
-        {
-            source.replace(start, what.length(), with);
-            start += with.length();
-        }
-
-        return source;
-    }
-
-    inline std::string SanitizeInputForGiNaC(std::string input)
-    {
-        return symcomp::util::ReplaceAll(input, "**", "^"); // SymEngine uses ** for powers, GiNaC uses ^
     }
 }
 
