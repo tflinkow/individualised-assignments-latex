@@ -12,13 +12,20 @@ end
 -- returns an expression where the symbol for exponentiation is ^
 function util.strings.CaretExponent(s)
     -- turns x**2+3*x to x^2+3*x
-    return s:gsub("%*%*", "^")
+
+    -- for the love of God, do not remove the assignment!
+    -- return s:gsub will lead to TWO RETURN VALUES (string and number of replacements)
+    -- causing all kinds of trouble later on
+    local newS = s:gsub("%*%*", "^")
+    return newS
 end
 
 -- returns an expression where the symbol for exponentiation is **
 function util.strings.AstExponent(s)
     -- turns x^2+3*x to x**2+3*x
-    return s:gsub("%^", "**")
+    
+    local newS = s:gsub("%^", "**")
+    return newS
 end
 
 -- provides functions that deal with tables representing an ExprRep (ExpressionRepresentation) object

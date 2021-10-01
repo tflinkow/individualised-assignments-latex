@@ -37,7 +37,7 @@ end
 
 -- returns a string which can be used by LaTeX
 function symcomp.getstringlatex(x)
-    return util.strings.CaretExponent(util.LaTeXStringFromAny(x))
+    return util.LaTeXStringFromAny(x)
 end
 
 -- returns a string that can be used by TikZ/PGFplots
@@ -162,7 +162,7 @@ function symcomp.printminmax(f, fname, x)
 end
 
 -- returns a string which contains the integral specified
-function symcomp.printintegral(f, x, u, l)
+function symcomp.printintegral(f, u, l, x)
     if u == nil and l == nil then
         return "\\int{" .. util.LaTeXStringFromAny(f) .. "}\\,\\mathrm{d}" .. util.LaTeXStringFromAny(x)        
     else
