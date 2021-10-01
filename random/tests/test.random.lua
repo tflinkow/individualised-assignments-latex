@@ -1,8 +1,6 @@
 package.path = package.path .. ";../?.lua;../../symcomp/?.lua"
-package.cpath = package.cpath .. ";../../wsymengine/bin/?.so"
 
 local random = require "random"
-local symcomp = require "symcomp"
 
 local factory = 
 {

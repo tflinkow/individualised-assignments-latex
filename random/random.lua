@@ -32,8 +32,8 @@ end
 
 -- returns a string representing a random fraction
 function random.rational() -- TODO: allow range specification! allow neg. fractions
-    a = random.integer(1, 15)
-    b = random.integer(1, 15)
+    local a = random.integer(1, 15)
+    local b = random.integer(1, 15)
 
     -- no need to reduce fractions, symcomp will do that
 
@@ -46,8 +46,8 @@ end
 
 -- returns a random real number
 function random.real(a, b)
-    l = a or random.MIN_REAL
-    u = b or random.MAX_REAL
+    local l = a or random.MIN_REAL
+    local u = b or random.MAX_REAL
 
     return l + (u - l) * math.random()
 end
@@ -78,8 +78,8 @@ function random.polynomial(deg)
     local ex = ""
 
     for i = 0, deg do
-        power = i
-        coeff = random.integer()
+        local power = i
+        local coeff = random.integer()
         
         if coeff >= 0 then
             ex = ex .. "+"

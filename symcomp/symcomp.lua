@@ -26,6 +26,7 @@ end
 
 -- solves f(x) == 0
 function symcomp.solve(f, x)
+    -- SymEngine's solve method has weird bugs, see https://github.com/symengine/symengine/issues/1843
     return wsymengine.solve(util.BasicStringFromAny(f), util.BasicStringFromAny(x))
 end
 
@@ -46,18 +47,19 @@ end
 
 -- finds the points of intersections between f and g
 function symcomp.findintersections(f, g, x)
-    h = symcomp.sub(f, g)
-    intersections = symcomp.solve(h, x)
+    local h = symcomp.sub(f, g)
+    
+    local intersections = symcomp.solve(h, x)
 
     return intersections
 end
 
 -- returns a string which lists the points of intersections
 function symcomp.printintersections(f, g, x)
-    h = symcomp.sub(f, g)
-    intersections = symcomp.solve(h, x)
+    local h = symcomp.sub(f, g)
+    local intersections = symcomp.solve(h, x)
 
-    pretty = ""
+    local pretty = ""
 
     if #intersections == 0 then
         pretty = pretty .. "The functions do not intersect"
@@ -87,9 +89,9 @@ end
 function symcomp.printzeros(f, fname, x, startidx) -- startidx opt
     startidx = startidx or 0
 
-    zeros = symcomp.solve(f, x)
+    local zeros = symcomp.solve(f, x)
 
-    pretty = "The function $" .. fname .. "$"
+    local pretty = "The function $" .. fname .. "$"
 
     if #zeros == 0 then
         pretty = pretty .. " does not have zeros"
@@ -116,13 +118,13 @@ end
 
 -- returns a string listing the minimums and maximums of a function
 function symcomp.printminmax(f, fname, x)
-    diff1 = symcomp.diff(f, x)
-    diff2 = symcomp.diff(diff1, x)
-    zeros = symcomp.solve(diff1, x)
+    local diff1 = symcomp.diff(f, x)
+    local diff2 = symcomp.diff(diff1, x)
+    local zeros = symcomp.solve(diff1, x)
 
-    fzeros = symcomp.solve(f, x) -- this is needed for correct indices
+    local fzeros = symcomp.solve(f, x) -- this is needed for correct indices
 
-    pretty = "The function $" .. fname .. "$"
+    local pretty = "The function $" .. fname .. "$"
 
     if #zeros == 0 then
         pretty = pretty .. " does not have extremal points"

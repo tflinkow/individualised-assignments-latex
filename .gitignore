@@ -60,3 +60,7 @@ wsymengine/.vscode/
 wsymengine/.idea/
 symcomp/.vscode/
 symcomp/.idea/
+
+symcomp/wsymengine/.idea/
+
+symcomp/wsymengine/.vscode/

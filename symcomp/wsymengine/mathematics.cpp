@@ -24,21 +24,32 @@ symcomp::ExprRepCollection symcomp::Solve(const std::string &what, const std::st
 
     auto solutions = SymEngine::solve(expression, symVar)->get_args();
 
-    symcomp::ExprRepCollection realSolutions;
+    ExprRepCollection realSolutions;
     realSolutions.reserve(solutions.size());
 
     // sort in ascending order, e.g. x0 = -2, x1 = 4, x2 = 10
     std::sort(solutions.begin(), solutions.end(), SymEngine::RCPBasicKeyLess());
     std::reverse(solutions.begin(), solutions.end());
 
-    for (auto solution : solutions)
+    for (const auto& solution : solutions)
     {
-        if(SymEngine::is_true(SymEngine::is_real(*solution)))
+        // does not work, see https://github.com/symengine/symengine/issues/1843#issuecomment-932520001
+        //if(SymEngine::is_true(SymEngine::is_real(*solution)))
+
+        // workaround: check whether eval_double throws
+        try
         {
+            SymEngine::eval_double(*solution);
+
+            // success: real solution
             auto ex = SymEngine::Expression(solution);
             auto exprRep = symcomp::ExprRep(ex);
 
             realSolutions.push_back(exprRep);
+        }
+        catch (const SymEngine::SymEngineException&)
+        {
+            // do nothing, complex solution
         }
     }
 

@@ -5,7 +5,7 @@ util.strings = {}
 -- returns a Lua number from a string which represents a fraction as num/denum
 function util.strings.FractionToNumber(s)
     -- turn '-1/2' into (-1) divided by (2) etc.
-    idx = s:find("/")
+    local idx = s:find("/")
     return tonumber(s:sub(1, idx - 1)) / tonumber(s:sub(idx + 1, #s))
 end
 
@@ -42,7 +42,7 @@ function util.BasicStringFromAny(x)
         if #x == 2 then
             return util.exprrep.Basic(x)
         else
-            error("TODO")
+            error("expected to receive a table with 2 elements, got " .. #x .. " instead")
         end
     elseif type(x) == "number" then
         return tostring(x) -- TODO??
@@ -59,7 +59,7 @@ function util.LaTeXStringFromAny(x)
         if #x == 2 then
             return util.exprrep.LaTeX(x)
         else
-            error("TODO")
+            error("expected to receive a table with 2 elements, got " .. #x .. " instead")
         end
     elseif type(x) == "number" then
         return tostring(x) -- TODO??
@@ -80,7 +80,7 @@ function util.NumberFromAny(x)
         if #x == 2 then
             return tonumber(util.exprrep.Basic(x))
         else
-            error("TODO")
+            error("expected to receive a table with 2 elements, got " .. #x .. " instead")
         end
     elseif type(x) == "number" then
         return x

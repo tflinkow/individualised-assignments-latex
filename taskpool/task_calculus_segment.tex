@@ -24,6 +24,9 @@
 
     -- subtract f(x) from g(x)
     gsubf = symcomp.sub(g, f)
+    
+    -- calculate the antiderivative
+    F = symcomp.integrate(gsubf, "x")
 
     -- integrate g(x)-f(x) between the intersection points
     area = symcomp.integrate(gsubf, p1, p2, "x")
@@ -41,7 +44,7 @@ Thus, the area is
 \begin{equation*}
     A=\printintegral{"g(x)-f(x)"}{p1}{p2}{"x"}=
       \printintegral{gsubf}{p1}{p2}{"x"}=
-      \left[\scprint{gsubf}\right]_{\scprint{p1}}^{\scprint{p2}}=
+      \left[\scprint{F}\right]_{\scprint{p1}}^{\scprint{p2}}=
       \scprint{area}
 \end{equation*}
 %

@@ -3,7 +3,7 @@ package.path = package.path .. ";../?.lua"
 local util = require "util"
 
 -- test exponentiation symbol replacement
-s = "x**2+3^x+4*5"
+local s = "x**2+3^x+4*5"
 
 assert(util.strings.CaretExponent(s) == "x^2+3^x+4*5")
 assert(util.strings.AstExponent(s) == "x**2+3**x+4*5")

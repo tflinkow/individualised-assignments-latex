@@ -3,7 +3,7 @@ package.path = package.path .. ";../?.lua"
 local util = require "util"
 
 -- test exprrep member access
-ex = { "Foo", "Bar" }
+local ex = { "Foo", "Bar" }
 
 assert(util.exprrep.Basic(ex) == "Foo")
 assert(util.exprrep.LaTeX(ex) == "Bar")
