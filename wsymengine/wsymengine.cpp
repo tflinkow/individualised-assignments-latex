@@ -7,12 +7,10 @@
 #include "exprrep.hpp"
 #include "mathematics.hpp"
 
-#define LIBSYMCOMP_LUA_CHECK_PARAMCOUNT(L, n, k) symcomp::util::LuaAssertParamCount(L, #n, k)
-
 #define LIBSYMCOMP_REGISTER_LUAFUNC(n, L, k) static int n(lua_State* (L))\
                                           {\
                                               Expects((L) != nullptr);\
-                                              LIBSYMCOMP_LUA_CHECK_PARAMCOUNT(L, n, k);\
+                                              symcomp::util::LuaAssertParamCount(L, #n, k);\
 
 #define LIBSYMCOMP_BEGIN_LUAMODULE(n) static const luaL_Reg n[] = {
 #define LIBSYMCOMP_LUAMODULE_REGISTER(n) { #n, n }

@@ -6,11 +6,11 @@ BDIR = bin
 
 all: wsymengine.cpp exprrep.cpp
 	mkdir -p $(BDIR)
-	$(CPP) $(CPFLAGS) -fPIC -shared wsymengine.cpp exprrep.cpp -o $(BDIR)/wsymengine.so $(LINK)
+	$(CPP) $(CPFLAGS) -fPIC -shared wsymengine.cpp exprrep.cpp mathematics.cpp -o $(BDIR)/wsymengine.so $(LINK)
 	
 tests: tests.cpp
 	mkdir -p $(BDIR)
-	$(CPP) $(CPFLAGS) tests.cpp exprrep.cpp -o $(BDIR)/tests $(LINK)
+	$(CPP) $(CPFLAGS) tests.cpp exprrep.cpp mathematics.cpp -o $(BDIR)/tests $(LINK)
 
 clean: 
 	rm -rf $(BDIR)

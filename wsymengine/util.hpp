@@ -20,7 +20,7 @@ namespace symcomp::util
     /// \return A \c SymEngine::Expression.
     inline SymEngine::Expression StringToSymEngineExpression(const std::string& str)
     {
-        return {SymEngine::parse(str) };
+        return { SymEngine::parse(str) };
     }
 
     /// Returns a \c SymEngine::Integer if the specified value is a whole number (e.g. 4.0 or 7.0) and returns a
@@ -30,7 +30,7 @@ namespace symcomp::util
     inline SymEngine::RCP<const SymEngine::Number> TryToInt(double a)
     {
         // https://stackoverflow.com/a/26343165/7571171
-        if(std::fmod(a, static_cast<decltype(a)>(1.0)) == 0.0)
+        if (std::fmod(a, static_cast<decltype(a)>(1.0)) == 0.0)
         {
             return SymEngine::integer(static_cast<int>(a));
         }

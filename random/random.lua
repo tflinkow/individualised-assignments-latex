@@ -7,6 +7,7 @@ random.MAX_REAL = 1
 
 math.randomseed(os.time())
 
+-- creates randomised expressions from the specified expression e, replacing characters with values as specified in the supplied factory
 function random.create(e, factory)
     assert(type(factory) == "table")
 
@@ -17,16 +18,19 @@ function random.create(e, factory)
     return e
 end
 
+-- returns a random table value
 function random.oneof(t)
     assert(type(t) == "table")
 
     return t[math.random(1, #t)]
 end
 
+-- returns a random integer between [a, b] or [random.MIN_INT, random.MAX_INT] if no range is specified
 function random.integer(a, b)
     return math.random(a or random.MIN_INT, b or random.MAX_INT)
 end
 
+-- returns a string representing a random fraction
 function random.rational() -- TODO: allow range specification! allow neg. fractions
     a = random.integer(1, 15)
     b = random.integer(1, 15)
@@ -40,6 +44,7 @@ function random.rational() -- TODO: allow range specification! allow neg. fracti
     end
 end
 
+-- returns a random real number
 function random.real(a, b)
     l = a or random.MIN_REAL
     u = b or random.MAX_REAL
@@ -47,6 +52,7 @@ function random.real(a, b)
     return l + (u - l) * math.random()
 end
 
+-- returns a random line equation mx+b
 function random.line(m, b)
     local factory =
     {
@@ -57,6 +63,7 @@ function random.line(m, b)
     return random.create("m*x+b", factory)
 end
 
+-- returns a random parabola ax^2
 function random.parabola(a, b)
     local factory = 
     {
@@ -66,6 +73,7 @@ function random.parabola(a, b)
     return random.create("a*x**2", factory)
 end
 
+-- returns a random polynomial of the specified degree
 function random.polynomial(deg)
     local ex = ""
 

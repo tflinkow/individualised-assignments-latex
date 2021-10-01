@@ -30,11 +30,11 @@ symcomp::ExprRep::ExprRep(const SymEngine::Expression& expression)
 
 int symcomp::ExprRep::ReturnToLua(gsl::not_null<lua_State *> L) const
 {
-    lua_newtable(L); // table @-1
+    lua_newtable(L);                        // table @-1
     lua_pushstring(L, this->Basic.c_str()); // table @-2, string @-1
-    lua_rawseti(L, -2, 1); // basic is table[1]
+    lua_rawseti(L, -2, 1);                  // basic is table[1]
     lua_pushstring(L, this->LaTeX.c_str()); // table @-2, string @-1
-    lua_rawseti(L, -2, 2); // laTeX is table[2]
+    lua_rawseti(L, -2, 2);                  // laTeX is table[2]
 
     return 1; // one return value (a table)
 }
