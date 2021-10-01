@@ -21,7 +21,7 @@ The framework was developed and compiled on Ubuntu 21.04 using
 
 # Features
 
-The framework consists of a randomisation module (documented [here](TODO)) and one module for symbolic computation (documented [here](TODO)).
+The framework consists of a randomisation module (documented [here](docs/random.md)) and one module for symbolic computation (documented [here](TODO)).
 
 In addition to that, there are some example tasks in `/taskpool` and there is a main `document.tex` that includes exercises from the task pool, along with a script `create.sh` which can be used to create individualised versions of the document.
 
