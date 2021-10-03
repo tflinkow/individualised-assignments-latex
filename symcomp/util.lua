@@ -61,7 +61,7 @@ end
 -- flexible way to get a LaTeX string from x if x is a string or a table representing an ExprRep object
 function util.LaTeXStringFromAny(x)
     if type(x) == "string" then
-        return x
+        return x -- TODO: hmmm
     elseif type(x) == "table" then
         if #x == 2 then
             return util.exprrep.LaTeX(x)

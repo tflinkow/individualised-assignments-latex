@@ -133,7 +133,8 @@ function symcomp.printminmax(f, fname, x)
     end
 
     for k, v in pairs(zeros) do
-        y = symcomp.evalAt(diff2, x, util.exprrep.Basic(v))
+        local val = symcomp.evalAt(diff2, x, util.exprrep.Basic(v))
+        local y = symcomp.evalAt(f, x, util.exprrep.Basic(v))
 
         if k == 1 then
         
@@ -143,7 +144,7 @@ function symcomp.printminmax(f, fname, x)
             pretty = pretty .. ","
         end
 
-        if tonumber(util.exprrep.Basic(y)) > 0 then
+        if tonumber(util.exprrep.Basic(val)) > 0 then
             pretty = pretty .. " a minimum"
         else -- todo: if == 0 then check inflection
             pretty = pretty .. " a maximum"
@@ -151,7 +152,7 @@ function symcomp.printminmax(f, fname, x)
 
         pretty = pretty .. " at $(" .. util.exprrep.LaTeX(v) .. "," .. util.exprrep.LaTeX(y) ..")$ because $" .. fname .. "''(" .. util.LaTeXStringFromAny(x) .. "_" .. k + #fzeros .. ")"
 
-        if tonumber(util.exprrep.Basic(y)) > 0 then
+        if tonumber(util.exprrep.Basic(val)) > 0 then
             pretty = pretty .. " > 0$"
         else -- todo: if == 0 then check inflection
             pretty = pretty .. " < 0$"

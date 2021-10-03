@@ -1,0 +1,38 @@
+\begin{luacode*}
+  symcomp = require "symcomp"
+  random = require "random"
+
+  local rules = 
+  {
+    { "a", random.integer() },
+    { "b", random.integer() }
+  }
+    
+  f = symcomp.expr(random.create("a*x^3+b*x^2", rules))
+
+  diff = symcomp.diff(f, "x")
+\end{luacode*}
+
+\question
+Given the function
+\begin{equation*}
+    f(x)=\scprint{f}
+\end{equation*}
+
+\begin{parts}
+  \part Find the zeros of $f$.
+  \part Find $f'$.
+  \part Find the zeros of $f'$.
+  \part Find the mimima and maxima of $f$.
+\end{parts}
+
+\begin{solution}
+
+\begin{parts}
+  \part \scprint{symcomp.printzeros(f, "f", "x")}
+  \part $f'=\scprint{diff}$
+  \part \scprint{symcomp.printzeros(diff, "f'", "x", 2)}
+  \part \scprint{symcomp.printminmax(f, "f", "x")}
+\end{parts}
+
+\end{solution}

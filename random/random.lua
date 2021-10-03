@@ -70,7 +70,7 @@ function random.parabola(a, b)
         { "a", a or random.rational() }
     }
 
-    return random.create("a*x**2", factory)
+    return random.create("a*x^2", factory)
 end
 
 -- returns a random polynomial of the specified degree
@@ -85,7 +85,7 @@ function random.polynomial(deg)
             ex = ex .. "+"
         end
 
-        ex = ex .. coeff .. "*x**(" .. power .. ")"
+        ex = ex .. coeff .. "*x^(" .. power .. ")"
     end
 
     return ex
