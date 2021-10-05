@@ -55,3 +55,9 @@ TEST_CASE("Differentiate correctly calculates derivative")
 
     CHECK(symcomp::Differentiate(f, x).Basic == "1 + 3*x**2");
 }
+
+TEST_CASE("IdentityMatrix correctly creates identity matrix")
+{
+    CHECK(symcomp::IdentityMatrix(2).Basic == "[1.0, 0.0] [0.0, 1.0]");
+    CHECK(symcomp::IdentityMatrix(3).Basic == "[1.0, 0.0, 0.0] [0.0, 1.0, 0.0] [0.0, 0.0, 1.0]");
+}

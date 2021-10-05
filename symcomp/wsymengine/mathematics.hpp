@@ -2,8 +2,6 @@
 #define LIBSYMCOMP_MATHEMATICS_HPP
 
 #include <symengine/expression.h>
-#include <symengine/parser.h>
-#include <symengine/solve.h>
 
 #include "util.hpp"
 #include "exprrep.hpp"
@@ -28,6 +26,13 @@ namespace symcomp
     /// \param var The variable to differentiate with respect to.
     /// \return The derivative of \p what.
     symcomp::ExprRep Differentiate(const std::string& what, const std::string& var);
+
+    /// Returns the identity matrix of the specified \p size.
+    /// \param size The size of the matrix, i.e. a size x size matrix will be returned.
+    /// \return The identity matrix of the specified size.
+    symcomp::ExprRep IdentityMatrix(int size);
+
+    symcomp::ExprRep Determinant(const SymEngine::MatrixBase& matrix);
 }
 
 #endif // LIBSYMCOMP_MATHEMATICS_HPP

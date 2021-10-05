@@ -1,5 +1,8 @@
 #include "mathematics.hpp"
 
+#include <symengine/matrix.h>
+#include <symengine/solve.h>
+
 symcomp::ExprRep symcomp::EvaluateAt(const std::string &what, const std::string &var, double value)
 {
     SymEngine::Expression symVar(var);
@@ -64,4 +67,24 @@ symcomp::ExprRep symcomp::Differentiate(const std::string &what, const std::stri
     auto derivative = expression.diff(symVar);
 
     return symcomp::ExprRep(derivative);
+}
+
+symcomp::ExprRep symcomp::IdentityMatrix(int size) {
+
+    auto matrix = SymEngine::DenseMatrix(size, size);
+
+    for (int i = 0; i < matrix.nrows(); ++i)
+    {
+        for (int j = 0; j < matrix.ncols(); ++j)
+        {
+            matrix.set(i, j, i == j ? SymEngine::number(1) : SymEngine::number(0));
+        }
+    }
+
+    return symcomp::ExprRep(matrix);
+}
+
+symcomp::ExprRep symcomp::Determinant(const SymEngine::MatrixBase &matrix)
+{
+    return symcomp::ExprRep(matrix.det());
 }

@@ -35,6 +35,21 @@ function symcomp.integrate(f, x, l, u)
     return wsymmath.integrate(util.BasicStringFromAny(f), util.BasicStringFromAny(x), util.BasicStringFromAny(l), util.BasicStringFromAny(u))
 end
 
+-- returns the identity matrix of the specified size
+function symcomp.identityMatrix(s)
+    return wsymengine.identityMatrix(util.NumberFromAny(s))
+end
+
+-- creates a matrix from an expression of the form [a11, a12, ..., a1n] [a21, a22, ..., a2n] ... [am1, am2, ..., amn]
+function symcomp.matrix(s)
+    return wsymengine.matrix(util.BasicStringFromAny(s))
+end
+
+-- calculates the determinant of the specified matrix
+function symcomp.det(s) -- TODO: where check for square?? or does SymEngine check
+    return wsymengine.det(util.BasicStringFromAny(s))
+end
+
 -- returns a string which can be used by LaTeX
 function symcomp.getstringlatex(x)
     return util.LaTeXStringFromAny(x)

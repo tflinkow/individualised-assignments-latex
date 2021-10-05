@@ -71,12 +71,48 @@ extern "C"
         return result.ReturnToLua(L);
     }
 
+    LIBSYMCOMP_REGISTER_LUAFUNC(identityMatrix, L, 1)
+
+        auto size = luaL_checkinteger(L, -1);
+
+        auto matrix = symcomp::IdentityMatrix(size);
+
+        return matrix.ReturnToLua(L);
+    }
+
+    LIBSYMCOMP_REGISTER_LUAFUNC(matrix, L, 1)
+
+        auto what = luaL_checkstring(L, -1);
+
+        auto matrix = symcomp::util::DenseMatrixFromString(what);
+
+        auto exprRep = symcomp::ExprRep(*matrix);
+        delete matrix;
+
+        return exprRep.ReturnToLua(L);
+    }
+
+    LIBSYMCOMP_REGISTER_LUAFUNC(det, L, 1)
+
+        auto what = luaL_checkstring(L, -1);
+
+        auto matrix = symcomp::util::DenseMatrixFromString(what);
+
+        auto det = symcomp::Determinant(*matrix);
+        delete matrix;
+
+        return det.ReturnToLua(L);
+    }
+
     LIBSYMCOMP_BEGIN_LUAMODULE(functions)
         LIBSYMCOMP_LUAMODULE_REGISTER(expr),
         LIBSYMCOMP_LUAMODULE_REGISTER(evalAt),
         LIBSYMCOMP_LUAMODULE_REGISTER(solve),
         LIBSYMCOMP_LUAMODULE_REGISTER(sub),
         LIBSYMCOMP_LUAMODULE_REGISTER(diff),
+        LIBSYMCOMP_LUAMODULE_REGISTER(identityMatrix),
+        LIBSYMCOMP_LUAMODULE_REGISTER(matrix),
+        LIBSYMCOMP_LUAMODULE_REGISTER(det),
     LIBSYMCOMP_END_LUAMODULE
 
 [[maybe_unused]] int luaopen_wsymengine(lua_State* L)

@@ -28,6 +28,13 @@ symcomp::ExprRep::ExprRep(const SymEngine::Expression& expression)
     *this = ExprRep(basic, laTeX);
 }
 
+
+
+symcomp::ExprRep::ExprRep(const SymEngine::MatrixBase &matrix)
+{
+    *this = ExprRep(symcomp::util::MatrixToBasic(matrix), symcomp::util::MatrixToLaTeX(matrix));
+}
+
 int symcomp::ExprRep::ReturnToLua(gsl::not_null<lua_State *> L) const
 {
     lua_newtable(L);                        // table @-1

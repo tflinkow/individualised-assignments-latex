@@ -2,6 +2,7 @@
 #define LIBSYMCOMP_EXPRREP_HPP
 
 #include <symengine/expression.h>
+#include <symengine/matrix.h>
 #include <symengine/parser.h>
 
 #include <gsl/gsl>
@@ -42,6 +43,10 @@ namespace symcomp
         /// Creates an \c ExprRep object from a \c SymEngine::Expression object.
         /// \param expression The \c SymEngine::Expression object.
         explicit ExprRep(const SymEngine::Expression& expression);
+
+        /// Creates an \c ExprRep object from a \c SymEngine::MatrixBase object.
+        /// \param matrix The matrix.
+        explicit ExprRep(const SymEngine::MatrixBase& matrix);
 
         /// Creates a table \c T containing the basic form at index 1 and the LaTeX form at index 2 and pushes it to the
         /// Lua stack.
