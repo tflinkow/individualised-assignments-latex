@@ -41,6 +41,11 @@ The `.csv` file can be exported from the e-learning platform moodle. It has to a
 
 The individualised `.pdf` files will be present in the `/output` folder and will be named `MatriculationNumber_FirstName_LastName_document.pdf`.
 
+# Examples
+
+There are three example tasks for different topics for introductory mathematics courses.
+One for [calculus](), for [analysis]() and for [linear algebra]()
+
 # License
 
 (c) Thomas Flinkow 2021
