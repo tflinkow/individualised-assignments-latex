@@ -3,7 +3,6 @@
 
 #include <symengine/expression.h>
 
-#include "util.hpp"
 #include "exprrep.hpp"
 
 namespace symcomp
@@ -32,7 +31,27 @@ namespace symcomp
     /// \return The identity matrix of the specified size.
     symcomp::ExprRep IdentityMatrix(int size);
 
-    symcomp::ExprRep Determinant(const SymEngine::MatrixBase& matrix);
+    /// Calculates the determinant of the specified matrix.
+    /// \param matrix The matrix.
+    /// \return The determinant of the specified matrix.
+    symcomp::ExprRep Determinant(const std::string& matrix);
+
+    /// Multiplies the specified matrix by the specified scalar.
+    /// \param scalar The number or symbol to multiply the matrix with.
+    /// \param matrix The matrix.
+    /// \return A matrix where each element of \p matrix has been multiplied with \p scalar.
+    symcomp::ExprRep MultiplyMatrixByScalar(const std::string& scalar, const std::string& matrix);
+
+    /// Subtracts \p b from \p a, i.e. calculates \p a - \p b.
+    /// \param a The matrix \p a.
+    /// \param b The matrix to subtract from \p a.
+    /// \return A matrix.
+    symcomp::ExprRep SubMatrices(const std::string& a, const std::string& b);
+
+    /// Returns a collection of all eigenvalues of the specified matrix.
+    /// \param matrix The matrix.
+    /// \return All eigenvalues of \p matrix.
+    symcomp::ExprRepCollection Eigenvalues(const std::string& matrix);
 }
 
 #endif // LIBSYMCOMP_MATHEMATICS_HPP

@@ -1,16 +1,6 @@
-# `wsymcomp.lua`
+# `symcomp.lua`
 
 > the symbolic computation module
-
-## Contents
-
-- [symcomp.evalAt]()
-- [symcomp.sub]()
-- [symcomp.solve]()
-- [symcomp.diff]()
-- [symcomp.integrate]()
-
----
 
 ## The common return value
 
@@ -24,6 +14,22 @@ res = symcomp.expr("1/2*x")
 print(res[1]) -- "1/2*x"
 print(res[2]) -- "\frac{1}{2} x"
 ```
+
+---
+
+## Contents
+
+- [symcomp.evalAt]()
+- [symcomp.sub]()
+- [symcomp.solve]()
+- [symcomp.diff]()
+- [symcomp.integrate]()
+- [symcomp.identityMatrix]()
+- [symcomp.matrix]()
+- [symcomp.matrixSub]()
+- [symcomp.scalarMul]()
+- [symcomp.det]()
+- [symcomp.eigenvalues]()
 
 ---
 
@@ -172,4 +178,157 @@ symcomp.integrate(f, "x", l, u)
 ```ini
 x^3/9
 3
+```
+
+---
+
+## `symcomp.identityMatrix(s)` - the identity matrix of size `s`
+
+### Signature
+
+```lua
+i = symcomp.identityMatrix(s)
+```
+
+### Example
+
+```lua
+i3 = symcomp.identityMatrix(3)
+```
+
+#### Output (`i3[1]`):
+
+```ini
+[1, 0, 0] [0, 1, 0] [0, 0, 1]
+```
+
+---
+
+## `symcomp.matrix(str)` - a matrix
+
+> creates a matrix object from a string representation.
+
+> **⚠️ Warning:**<br/>
+> The format of a `m x n` matrix is `[a_11, a_12, ..., a_1n] ... [a_m1, a_m2, ..., a_mn]`.
+> Note that every entry has to be specified in each row.
+
+### Signature
+
+```lua
+m = symcomp.matrix(str)
+```
+
+### Example
+
+```lua
+m = symcomp.identityMatrix("[1, 2] [3, 4]")
+```
+
+#### Output (`m[1]`):
+
+```ini
+[1, 2] [3, 4]
+```
+
+---
+
+## `symcomp.matrixSub(a, b)` - returns `a - b` 
+
+> subtracts `b` from `a` where `a`, `b` are two matrices.
+
+### Signature
+
+```lua
+res = symcomp.matrixSub(a, b)
+```
+
+### Example
+
+```lua
+a = "[1, 2] [3, 4]"
+b = "[0, 1] [0, 2]"
+ 
+res = symcomp.matrixSub(a, b)
+```
+
+#### Output (`res[1]`)
+
+```ini
+[1, 1] [3, 2]
+```
+
+---
+
+## `symcomp.scalarMul(k, a)` - returns `k*a` 
+
+> multiplies the matrix `a` by a scalar value `k`.
+
+### Signature
+
+```lua
+res = symcomp.scalarMul(k, a)
+```
+
+### Example
+
+```lua
+a = "[1, 2] [3, 4]"
+k = 4
+ 
+res = symcomp.scalarMul(k, a)
+```
+
+#### Output (`res[1]`)
+
+```ini
+[4, 8] [12, 16]
+```
+
+---
+
+## `symcomp.det(a)` - the determinant of a matrix
+
+### Signature
+
+```lua
+d = symcomp.det(a)
+```
+
+### Example
+
+```lua
+a = "[1, 2] [3, 4]"
+
+d = symcomp.det(a)
+```
+
+#### Output (`d[1]`):
+
+```ini
+-2
+```
+
+---
+
+## `symcomp.eigenvalues(a)` - the eigenvalues of a matrix `a`
+
+### Signature
+
+```lua
+evs = symcomp.eigenvalues(a)
+```
+
+### Example
+
+```lua
+a = "[-5, -3] [-3, 3]"
+
+evs = symcomp.eigenvalues(a)
+```
+
+#### Output:
+
+```ini
+-6
+-4
 ```

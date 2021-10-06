@@ -2,17 +2,13 @@
 #define LIBSYMCOMP_EXPRREP_HPP
 
 #include <symengine/expression.h>
-#include <symengine/matrix.h>
-#include <symengine/parser.h>
 
 #include <gsl/gsl>
 
 #include <lua5.3/lua.h>
-#include <lua5.3/lualib.h>
 #include <lua5.3/lauxlib.h>
 
 #include <string>
-#include <sstream>
 
 #include "util.hpp"
 

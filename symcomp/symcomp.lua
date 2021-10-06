@@ -24,6 +24,13 @@ function symcomp.sub(a, b)
     return wsymengine.sub(util.BasicStringFromAny(a), util.BasicStringFromAny(b))
 end
 
+-- TODO: it would be good to be able to typecheck, and have only one sub method
+
+-- subtracts the matrix B from A (hence A - B)
+function symcomp.matrixSub(A, B)
+    return wsymengine.matrixSub(util.BasicStringFromAny(A), util.BasicStringFromAny(B))
+end
+
 -- solves f(x) == 0
 function symcomp.solve(f, x)
     -- SymEngine's solve method has weird bugs, see https://github.com/symengine/symengine/issues/1843
@@ -36,18 +43,28 @@ function symcomp.integrate(f, x, l, u)
 end
 
 -- returns the identity matrix of the specified size
-function symcomp.identityMatrix(s)
-    return wsymengine.identityMatrix(util.NumberFromAny(s))
+function symcomp.identityMatrix(n)
+    return wsymengine.identityMatrix(util.NumberFromAny(n))
 end
 
 -- creates a matrix from an expression of the form [a11, a12, ..., a1n] [a21, a22, ..., a2n] ... [am1, am2, ..., amn]
-function symcomp.matrix(s)
-    return wsymengine.matrix(util.BasicStringFromAny(s))
+function symcomp.matrix(m)
+    return wsymengine.matrix(util.BasicStringFromAny(m))
+end
+
+-- returns s * m where s is a scalar and m a matrix
+function symcomp.scalarMul(s, m)
+    return wsymengine.scalarMul(util.BasicStringFromAny(s), util.BasicStringFromAny(m))
 end
 
 -- calculates the determinant of the specified matrix
-function symcomp.det(s) -- TODO: where check for square?? or does SymEngine check
-    return wsymengine.det(util.BasicStringFromAny(s))
+function symcomp.det(m) -- TODO: where check for square?? or does SymEngine check
+    return wsymengine.det(util.BasicStringFromAny(m))
+end
+
+-- returns the eigenvalues of the specified matrix
+function symcomp.eigenvalues(m)
+    return wsymengine.eigenvalues(util.BasicStringFromAny(m))
 end
 
 -- returns a string which can be used by LaTeX
@@ -184,6 +201,37 @@ function symcomp.printintegral(f, u, l, x)
     else
         return "\\int_{" .. util.LaTeXStringFromAny(u) .. "}^{" .. util.LaTeXStringFromAny(l) .. "}{" .. util.LaTeXStringFromAny(f) .. "}\\,\\mathrm{d}" .. util.LaTeXStringFromAny(x)    
     end
+end
+
+-- returns a string which lists the eigenvalues of a matrix
+function symcomp.printeigenvalues(A, Aname, startidx) -- startidx opt
+    startidx = startidx or 0
+
+    local eigenvalues = symcomp.eigenvalues(A)
+
+    local pretty = "The matrix $" .. Aname .. "$"
+
+    if #eigenvalues == 0 then
+        pretty = pretty .. " does not have eigenvalues"
+    elseif #eigenvalues == 1 then
+        pretty = pretty .. " has the eigenvalue "
+    else
+        pretty = pretty .. " has the eigenvalues "
+    end
+
+    for k, v in pairs(eigenvalues) do
+        if k == 1 then
+        
+        elseif k == #eigenvalues then
+            pretty = pretty .. " and "
+        else
+            pretty = pretty .. ", "
+        end
+
+        pretty = pretty .. "$\\lambda_" .. k + startidx .. "=" .. util.exprrep.LaTeX(v) .. "$"
+    end
+
+    return pretty .. "."
 end
 
 return symcomp

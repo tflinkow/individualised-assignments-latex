@@ -28,8 +28,6 @@ symcomp::ExprRep::ExprRep(const SymEngine::Expression& expression)
     *this = ExprRep(basic, laTeX);
 }
 
-
-
 symcomp::ExprRep::ExprRep(const SymEngine::MatrixBase &matrix)
 {
     *this = ExprRep(symcomp::util::MatrixToBasic(matrix), symcomp::util::MatrixToLaTeX(matrix));

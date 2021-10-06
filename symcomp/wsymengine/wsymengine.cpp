@@ -86,22 +86,41 @@ extern "C"
 
         auto matrix = symcomp::util::DenseMatrixFromString(what);
 
-        auto exprRep = symcomp::ExprRep(*matrix);
-        delete matrix;
-
-        return exprRep.ReturnToLua(L);
+        return symcomp::ExprRep(*matrix).ReturnToLua(L);
     }
 
     LIBSYMCOMP_REGISTER_LUAFUNC(det, L, 1)
 
         auto what = luaL_checkstring(L, -1);
 
-        auto matrix = symcomp::util::DenseMatrixFromString(what);
+        return symcomp::Determinant(what).ReturnToLua(L);
+    }
 
-        auto det = symcomp::Determinant(*matrix);
-        delete matrix;
+    LIBSYMCOMP_REGISTER_LUAFUNC(scalarMul, L, 2)
 
-        return det.ReturnToLua(L);
+        auto matrix = luaL_checkstring(L, -1);
+        auto scalar = luaL_checkstring(L, -2);
+
+        auto result = symcomp::MultiplyMatrixByScalar(scalar, matrix);
+
+        return result.ReturnToLua(L);
+    }
+
+    LIBSYMCOMP_REGISTER_LUAFUNC(matrixSub, L, 2)
+
+        auto B = luaL_checkstring(L, -1);
+        auto A = luaL_checkstring(L, -2);
+
+        auto result = symcomp::SubMatrices(A, B);
+
+        return result.ReturnToLua(L);
+    }
+
+    LIBSYMCOMP_REGISTER_LUAFUNC(eigenvalues, L, 1)
+
+        auto what = luaL_checkstring(L, -1);
+
+        return symcomp::ReturnExprRepVectorToLua(L, symcomp::Eigenvalues(what));
     }
 
     LIBSYMCOMP_BEGIN_LUAMODULE(functions)
@@ -113,6 +132,9 @@ extern "C"
         LIBSYMCOMP_LUAMODULE_REGISTER(identityMatrix),
         LIBSYMCOMP_LUAMODULE_REGISTER(matrix),
         LIBSYMCOMP_LUAMODULE_REGISTER(det),
+        LIBSYMCOMP_LUAMODULE_REGISTER(scalarMul),
+        LIBSYMCOMP_LUAMODULE_REGISTER(matrixSub),
+        LIBSYMCOMP_LUAMODULE_REGISTER(eigenvalues),
     LIBSYMCOMP_END_LUAMODULE
 
 [[maybe_unused]] int luaopen_wsymengine(lua_State* L)

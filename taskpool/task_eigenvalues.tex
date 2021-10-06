@@ -1,0 +1,49 @@
+\begin{luacode*}
+  symcomp = require "symcomp"
+  random = require "random"
+
+  local baseMatrices = 
+  {
+    "[-2, 1] [12, -3]",
+    "[-5, -3] [-3, 3]",
+    "[4, -5] [-5, 4]"
+  }
+  
+  local k = random.integer(-5, 5)
+
+  local base = symcomp.matrix(random.oneof(baseMatrices))
+  A = symcomp.scalarMul(k, base)
+
+  I = symcomp.identityMatrix(2)
+
+  lambdaI = symcomp.scalarMul("lambda", I)
+  AminusLambdaI = symcomp.matrixSub(A, lambdaI)
+
+  det = symcomp.det(AminusLambdaI)
+\end{luacode*}
+
+\question
+Find all eigenvalues and eigenvectors of the matrix
+\begin{equation*}
+    A = \scprint{A}.
+\end{equation*}
+
+\begin{solution}
+
+Calculate $A-\lambda I_2$:
+
+\begin{equation*}
+A-\lambda I_2 = \scprint{A} - \lambda\scprint{I} = \scprint{AminusLambdaI}.
+\end{equation*}
+
+Then, calculate $\det(A-\lambda I_2)$.
+
+\begin{equation*}
+\det(A-\lambda I_2) = \scprint{det}
+\end{equation*}
+
+Now, we solve $\det(A-\lambda I_2)=0$.
+
+\scprint{symcomp.printeigenvalues(A, "A")}
+
+\end{solution}
