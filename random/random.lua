@@ -5,8 +5,6 @@ random.MAX_INT = 10
 random.MIN_REAL = -1
 random.MAX_REAL = 1
 
-math.randomseed(os.time())
-
 -- creates randomised expressions from the specified expression e, replacing characters with values as specified in the supplied factory
 function random.create(e, factory)
     assert(type(factory) == "table")
