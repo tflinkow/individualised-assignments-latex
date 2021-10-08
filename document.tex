@@ -1,21 +1,22 @@
 \documentclass[a4paper]{exam}
 
+% use \documentclass[answers,...]{exam}
 \directlua{if arg[8] == "answers" then tex.print("\\printanswers") end}
 
 \input{preamble}
 
 \begin{document}
 
+% extract matriculation number, first and last name
 \begin{luacode*}
-matriculationNumber = arg[5] or 0
-firstName = arg[6] or "First name"
-lastName = arg[7] or "Last name"
+matriculationNumber = arg[5]
+firstName = arg[6]
+lastName = arg[7]
 
 -- use the same seed for each assignment
 -- so that compiling the file twice (once with
 -- and one time without solutions) does not
 -- create new random variables
-
 -- seed the random generator with the matriculation number
 math.randomseed(matriculationNumber)
 \end{luacode*}
@@ -26,6 +27,7 @@ Student name: \directlua{tex.print(firstName .. " " .. lastName)}
 
 \begin{questions}
 
+% include tasks from the task pool
 \input{taskpool/task_calculus_segment}
 \input{taskpool/task_derivatives}
 \input{taskpool/task_eigenvalues.tex}
