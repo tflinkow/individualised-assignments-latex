@@ -34,11 +34,11 @@ namespace symcomp::util
     {
         std::ostringstream oss;
 
-        for (auto i = 0; i < matrix.nrows(); ++i)
+        for (unsigned int i = 0; i < matrix.nrows(); ++i)
         {
             oss << "[";
 
-            for (auto j = 0; j < matrix.ncols() - 1; ++j)
+            for (unsigned int j = 0; j < matrix.ncols() - 1; ++j)
             {
                 oss << *matrix.get(i, j) << ", ";
             }
@@ -46,7 +46,10 @@ namespace symcomp::util
             oss << *matrix.get(i, matrix.ncols() - 1) << "] ";
         }
 
-        return oss.str();
+        auto result = oss.str();
+        result.pop_back(); // remove the trailing space character
+
+        return result;
     }
 
     /// Creates the LaTeX representation of a \c SymEngine::MatrixBase.
@@ -57,9 +60,9 @@ namespace symcomp::util
         std::ostringstream oss;
         oss << "\\begin{bmatrix}";
 
-        for (auto i = 0; i < matrix.nrows(); ++i)
+        for (unsigned int i = 0; i < matrix.nrows(); ++i)
         {
-            for (auto j = 0; j < matrix.ncols() - 1; ++j)
+            for (unsigned int j = 0; j < matrix.ncols() - 1; ++j)
             {
                 oss << SymEngine::latex(*matrix.get(i, j)) << " & ";
             }
@@ -138,9 +141,9 @@ namespace symcomp::util
         // what if column count is not the same for all rows?
         auto matrix = std::make_shared<SymEngine::DenseMatrix>(rows.size(), rows[0].size());
 
-        for (auto i = 0; i < matrix->nrows(); ++i)
+        for (unsigned int i = 0; i < matrix->nrows(); ++i)
         {
-            for (auto j = 0; j < matrix->ncols(); ++j)
+            for (unsigned int j = 0; j < matrix->ncols(); ++j)
             {
                 auto value = SymEngine::parse(rows[i][j]);
                 matrix->set(i, j, value);

@@ -7,18 +7,18 @@
 #include "exprrep.hpp"
 #include "mathematics.hpp"
 
-#define LIBSYMCOMP_REGISTER_LUAFUNC(n, L, k) static int n(lua_State* (L))\
+#define LIBSYMCOMP_EXPOSE_TO_LUA(n, L, k) static int n(lua_State* (L))\
                                           {\
                                               Expects((L) != nullptr);\
                                               symcomp::util::LuaAssertParamCount(L, #n, k);\
 
 #define LIBSYMCOMP_BEGIN_LUAMODULE(n) static const luaL_Reg n[] = {
-#define LIBSYMCOMP_LUAMODULE_REGISTER(n) { #n, n }
+#define LIBSYMCOMP_ADD_TO_LUAMODULE(n) { #n, n }
 #define LIBSYMCOMP_END_LUAMODULE { NULL, NULL }  };
 
 extern "C"
 {
-    LIBSYMCOMP_REGISTER_LUAFUNC(expr, L, 1)
+    LIBSYMCOMP_EXPOSE_TO_LUA(expr, L, 1)
 
         auto what = luaL_checkstring(L, -1);
 
@@ -27,7 +27,7 @@ extern "C"
         return result.ReturnToLua(L);
     }
 
-    LIBSYMCOMP_REGISTER_LUAFUNC(evalAt, L, 3)
+    LIBSYMCOMP_EXPOSE_TO_LUA(evalAt, L, 3)
 
         auto value = luaL_checknumber(L, -1);        
         auto var = luaL_checkstring(L, -2);
@@ -38,7 +38,7 @@ extern "C"
         return result.ReturnToLua(L);
     }
 
-    LIBSYMCOMP_REGISTER_LUAFUNC(solve, L, 2)
+    LIBSYMCOMP_EXPOSE_TO_LUA(solve, L, 2)
 
         auto var = luaL_checkstring(L, -1);
         auto what = luaL_checkstring(L, -2);
@@ -49,8 +49,7 @@ extern "C"
     }
 
     // subtracts b from a
-    // TODO: this does not call into mathematics.hpp!
-    LIBSYMCOMP_REGISTER_LUAFUNC(sub, L, 2)
+    LIBSYMCOMP_EXPOSE_TO_LUA(sub, L, 2)
 
         auto b = luaL_checkstring(L, -1);
         auto a = luaL_checkstring(L, -2);
@@ -61,7 +60,7 @@ extern "C"
         return symcomp::ExprRep(SymEngine::sub(aEx, bEx)).ReturnToLua(L);
     }
 
-    LIBSYMCOMP_REGISTER_LUAFUNC(diff, L, 2)
+    LIBSYMCOMP_EXPOSE_TO_LUA(diff, L, 2)
 
         auto var = luaL_checkstring(L, -1);
         auto what = luaL_checkstring(L, -2);
@@ -71,7 +70,7 @@ extern "C"
         return result.ReturnToLua(L);
     }
 
-    LIBSYMCOMP_REGISTER_LUAFUNC(identityMatrix, L, 1)
+    LIBSYMCOMP_EXPOSE_TO_LUA(identityMatrix, L, 1)
 
         auto size = luaL_checkinteger(L, -1);
 
@@ -80,7 +79,7 @@ extern "C"
         return matrix.ReturnToLua(L);
     }
 
-    LIBSYMCOMP_REGISTER_LUAFUNC(matrix, L, 1)
+    LIBSYMCOMP_EXPOSE_TO_LUA(matrix, L, 1)
 
         auto what = luaL_checkstring(L, -1);
 
@@ -89,14 +88,14 @@ extern "C"
         return symcomp::ExprRep(*matrix).ReturnToLua(L);
     }
 
-    LIBSYMCOMP_REGISTER_LUAFUNC(det, L, 1)
+    LIBSYMCOMP_EXPOSE_TO_LUA(det, L, 1)
 
         auto what = luaL_checkstring(L, -1);
 
         return symcomp::Determinant(what).ReturnToLua(L);
     }
 
-    LIBSYMCOMP_REGISTER_LUAFUNC(scalarMul, L, 2)
+    LIBSYMCOMP_EXPOSE_TO_LUA(scalarMul, L, 2)
 
         auto matrix = luaL_checkstring(L, -1);
         auto scalar = luaL_checkstring(L, -2);
@@ -106,7 +105,7 @@ extern "C"
         return result.ReturnToLua(L);
     }
 
-    LIBSYMCOMP_REGISTER_LUAFUNC(matrixSub, L, 2)
+    LIBSYMCOMP_EXPOSE_TO_LUA(matrixSub, L, 2)
 
         auto B = luaL_checkstring(L, -1);
         auto A = luaL_checkstring(L, -2);
@@ -116,7 +115,7 @@ extern "C"
         return result.ReturnToLua(L);
     }
 
-    LIBSYMCOMP_REGISTER_LUAFUNC(eigenvalues, L, 1)
+    LIBSYMCOMP_EXPOSE_TO_LUA(eigenvalues, L, 1)
 
         auto what = luaL_checkstring(L, -1);
 
@@ -124,17 +123,17 @@ extern "C"
     }
 
     LIBSYMCOMP_BEGIN_LUAMODULE(functions)
-        LIBSYMCOMP_LUAMODULE_REGISTER(expr),
-        LIBSYMCOMP_LUAMODULE_REGISTER(evalAt),
-        LIBSYMCOMP_LUAMODULE_REGISTER(solve),
-        LIBSYMCOMP_LUAMODULE_REGISTER(sub),
-        LIBSYMCOMP_LUAMODULE_REGISTER(diff),
-        LIBSYMCOMP_LUAMODULE_REGISTER(identityMatrix),
-        LIBSYMCOMP_LUAMODULE_REGISTER(matrix),
-        LIBSYMCOMP_LUAMODULE_REGISTER(det),
-        LIBSYMCOMP_LUAMODULE_REGISTER(scalarMul),
-        LIBSYMCOMP_LUAMODULE_REGISTER(matrixSub),
-        LIBSYMCOMP_LUAMODULE_REGISTER(eigenvalues),
+                    LIBSYMCOMP_ADD_TO_LUAMODULE(expr),
+                    LIBSYMCOMP_ADD_TO_LUAMODULE(evalAt),
+                    LIBSYMCOMP_ADD_TO_LUAMODULE(solve),
+                    LIBSYMCOMP_ADD_TO_LUAMODULE(sub),
+                    LIBSYMCOMP_ADD_TO_LUAMODULE(diff),
+                    LIBSYMCOMP_ADD_TO_LUAMODULE(identityMatrix),
+                    LIBSYMCOMP_ADD_TO_LUAMODULE(matrix),
+                    LIBSYMCOMP_ADD_TO_LUAMODULE(det),
+                    LIBSYMCOMP_ADD_TO_LUAMODULE(scalarMul),
+                    LIBSYMCOMP_ADD_TO_LUAMODULE(matrixSub),
+                    LIBSYMCOMP_ADD_TO_LUAMODULE(eigenvalues),
     LIBSYMCOMP_END_LUAMODULE
 
 [[maybe_unused]] int luaopen_wsymengine(lua_State* L)

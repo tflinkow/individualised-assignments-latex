@@ -61,3 +61,43 @@ TEST_CASE("IdentityMatrix correctly creates identity matrix")
     CHECK(symcomp::IdentityMatrix(2).Basic == "[1.0, 0.0] [0.0, 1.0]");
     CHECK(symcomp::IdentityMatrix(3).Basic == "[1.0, 0.0, 0.0] [0.0, 1.0, 0.0] [0.0, 0.0, 1.0]");
 }
+
+TEST_CASE("MatrixFromString correctly parses matrices")
+{
+    auto expected = "[12, 13.5] [x, -4]";
+    auto matrix = symcomp::util::DenseMatrixFromString("[12,13.5][x,-4]");
+
+    auto exprRep = symcomp::ExprRep(*matrix);
+
+    CHECK(exprRep.Basic == expected);
+}
+
+TEST_CASE("Determinant correctly calculates the determinant")
+{
+    CHECK(symcomp::Determinant("[4, 8] [10, 2]").Basic == "-72");
+}
+
+TEST_CASE("MultiplyMatrixByScalar correctly multiplies matrix elements with the scalar")
+{
+    auto matrix = "[4, 8] [10, 2]";
+    auto scalar = "lambda";
+
+    CHECK(symcomp::MultiplyMatrixByScalar(scalar, matrix).Basic == "[4*lambda, 8*lambda] [10*lambda, 2*lambda]");
+}
+
+TEST_CASE("SubMatrices correctly subtracts one matrix from another")
+{
+    auto a = "[4, 8] [10, 2]";
+    auto b = "[8, 2] [4, 7]";
+
+    CHECK(symcomp::SubMatrices(a, b).Basic == "[-4.0, 6.0] [6.0, -5.0]");
+}
+
+TEST_CASE("Eigenvalues correctly calculates eigenvalues")
+{
+    auto eigenvalues = symcomp::Eigenvalues("[4, 8] [10, 2]");
+
+    CHECK(eigenvalues.size() == 2); // count
+    CHECK(eigenvalues[0].Basic == "-6"); // order
+    CHECK(eigenvalues[1].Basic == "12"); // order
+}

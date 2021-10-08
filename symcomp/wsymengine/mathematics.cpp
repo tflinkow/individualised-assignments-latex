@@ -73,9 +73,9 @@ symcomp::ExprRep symcomp::IdentityMatrix(int size)
 {
     auto matrix = SymEngine::DenseMatrix(size, size);
 
-    for (auto i = 0; i < matrix.nrows(); ++i)
+    for (unsigned int i = 0; i < matrix.nrows(); ++i)
     {
-        for (auto j = 0; j < matrix.ncols(); ++j)
+        for (unsigned int j = 0; j < matrix.ncols(); ++j)
         {
             matrix.set(i, j, i == j ? SymEngine::number(1) : SymEngine::number(0));
         }

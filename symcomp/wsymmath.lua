@@ -38,4 +38,12 @@ function wsymmath.integrate(f, x, l, u)
     end
 end
 
+-- not to be used by symcomp, but rather only for benchmarks
+function wsymmath.diff(f, x)
+    local F = Load(f)
+    local X = Load(x)
+
+    return wsymmath.CreateExprRep(symmath.diff(F, X))
+end
+
 return wsymmath

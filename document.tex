@@ -1,7 +1,7 @@
 \documentclass[a4paper]{exam}
 
 % use \documentclass[answers,...]{exam}
-\directlua{if arg[8] == "answers" then tex.print("\\printanswers") end}
+\directlua{if arg[9] == "answers" then tex.print("\\printanswers") end}
 
 \input{preamble}
 
@@ -9,9 +9,9 @@
 
 % extract matriculation number, first and last name
 \begin{luacode*}
-matriculationNumber = arg[5]
-firstName = arg[6]
-lastName = arg[7]
+matriculationNumber = arg[6]
+firstName = arg[7]
+lastName = arg[8]
 
 -- use the same seed for each assignment
 -- so that compiling the file twice (once with
