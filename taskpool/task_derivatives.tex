@@ -24,9 +24,8 @@
     fzeros = symcomp.solve(f, "x")
 \end{luacode*}
 
-% BASED ON DIFFERENTIALRECHNUNG AUFGABE 12. ON PAGE 5
-% \footnote{Arbeitsheft zur Vorlesung Ingenieurmathematik -- Differentialrechnung: Aufgabe 12 \textbullet, S. 5}
-\question[k]
+% based on Jürgen Vorloeper, Arbeitsheft zur Vorlesung Ingenieurmathematik -- Differentialrechnung: Aufgabe 12, S. 5
+\question
 Given the function
 \begin{equation*}
     f(x)=\scprint{f}
@@ -54,10 +53,8 @@ First, calculate the derivatives
     axis lines = center,
     xlabel = $x$,
     ylabel = $y$,
-    ymin = -10, % TODO: are these okay because they are random.MAX_INT etc.?
+    ymin = -10,
     ymax = 10,
-    %xmin = -10,
-    %xmax = 10,
     enlargelimits,
     samples = 200,
     enlargelimits,
