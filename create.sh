@@ -1,9 +1,11 @@
 # parameters:
-#                $1       $2
-# ./create.sh document list.csv
+#                $1       $2      $3
+# ./create.sh document Jobname list.csv
 #             ^^^^^^^^
 #             tex file ^^^^^^^^
-#                      csv file
+#                      job name
+#                              ^^^^^^^^
+#                              csv file
 
 mkdir -p output
 
@@ -29,24 +31,21 @@ mkdir -p output
     lastname="${lastname#\"}"
   
     # the name of the PDF file without solutions
-    jobname="${matriculationnumber}_${firstname}_${lastname}"
+    jobname="${matriculationnumber}_${firstname}_${lastname}_${2}"
     
     # the name of the PDF file with solutions
-    jobnamewithsolution="${matriculationnumber}_${firstname}_${lastname}_Solution"
+    jobnamewithsolution="${matriculationnumber}_${firstname}_${lastname}_${2}_Solution"
     
-    echo $jobname
+    echo "Generating " $jobname
 
     # compile each file twice to account for total points calculation etc.
-    #for i in { 1..2 };
-    #do
-      lualatex --shell-escape --interaction=batchmode -output-directory=output -jobname=$jobname $1 $matriculationnumber $firstname $lastname
-      lualatex --shell-escape --interaction=batchmode -output-directory=output -jobname=$jobname $1 $matriculationnumber $firstname $lastname
+    lualatex --shell-escape --interaction=batchmode -output-directory=output -jobname=$jobname $1 $matriculationnumber $firstname $lastname
+    lualatex --shell-escape --interaction=batchmode -output-directory=output -jobname=$jobname $1 $matriculationnumber $firstname $lastname
     
-      lualatex --shell-escape --interaction=batchmode -output-directory=output -jobname=$jobnamewithsolution $1 $matriculationnumber $firstname $lastname answers
-      lualatex --shell-escape --interaction=batchmode -output-directory=output -jobname=$jobnamewithsolution $1 $matriculationnumber $firstname $lastname answers
-    #done
+    lualatex --shell-escape --interaction=batchmode -output-directory=output -jobname=$jobnamewithsolution $1 $matriculationnumber $firstname $lastname answers
+    lualatex --shell-escape --interaction=batchmode -output-directory=output -jobname=$jobnamewithsolution $1 $matriculationnumber $firstname $lastname answers
   done
-} < $2 
+} < $3
 
 # delete auxiliary files and logs
 find output ! -name "*.pdf" -type f -delete
