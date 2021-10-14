@@ -3,7 +3,7 @@
 This project is a framework to create individualised assignments for mathematics in LaTeX.
 
 It is part of my bachelor's project at the Hochschule Ruhr West University of Applied Sciences and was created from August to October 2021.
-The bachelor's thesis itself is [thesis.pdf](TODO).
+The bachelor's thesis itself is [thesis.pdf](thesis.pdf).
 
 # Prerequisites
 
