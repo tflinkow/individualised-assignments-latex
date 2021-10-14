@@ -221,7 +221,7 @@ m = symcomp.matrix(str)
 ### Example
 
 ```lua
-m = symcomp.identityMatrix("[1, 2] [3, 4]")
+m = symcomp.matrix("[1, 2] [3, 4]")
 ```
 
 #### Output (`m[1]`):
