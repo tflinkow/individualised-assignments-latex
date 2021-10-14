@@ -31,15 +31,15 @@ Executing the `create.sh` script as follows
 ./create.sh document DocumentName list.csv
 ```
 
-will create individualised versions of `document.tex` for each line present in the `list.csv` file. 
+will create individualised versions of `document.tex` for each line present in the `list.csv` file. One file is generated with solutions and one without. 
 
 The `.csv` file can be exported from the e-learning platform moodle. It has to adhere to the following format:
 
 ```
-[[id]],FirstName,LastName,MatriculationNumber
+[[id]],"First name","Surname","ID number"
 ```
 
-The individualised `.pdf` files will be present in the [`/output`](output) folder and will be named `MatriculationNumber_FirstName_LastName_DocumentName.pdf`.
+The individualised `.pdf` files will be present in the [`/output`](output) folder and will be named `ID_FirstName_LastName_DocumentName.pdf` (without solutions) and `ID_FirstName_LastName_DocumentName_Solutions.pdf`.
 
 # Examples
 
