@@ -21,7 +21,7 @@ The framework was developed and compiled on Ubuntu 21.04 using
 
 # Features
 
-The framework consists of a randomisation module (documented [here](docs/random.md)) and one module for symbolic computation (documented [here](TODO)).
+The framework consists of a randomisation module (documented [here](docs/random.md)) and one module for symbolic computation (documented [here](docs/symcomp.md)).
 
 In addition to that, there are some example tasks in `/taskpool` and there is a main `document.tex` that includes exercises from the task pool, along with a script `create.sh` which can be used to create individualised versions of the document.
 
@@ -39,15 +39,15 @@ The `.csv` file can be exported from the e-learning platform moodle. It has to a
 [[id]],FirstName,LastName,MatriculationNumber
 ```
 
-The individualised `.pdf` files will be present in the `/output` folder and will be named `MatriculationNumber_FirstName_LastName_document.pdf`.
+The individualised `.pdf` files will be present in the `/output` folder and will be named `MatriculationNumber_FirstName_LastName_DocumentName.pdf`.
 
 # Examples
 
 There are three example tasks for different topics for introductory mathematics courses.
-One for [calculus](), for [analysis]() and for [linear algebra]()
+One for [calculus](taskpool/task_calculus_segment.tex), for [analysis](taskpool/task_derivatives.tex) and for [linear algebra](taskpool/task_eigenvalues.tex)
 
 # License
 
 (c) Thomas Flinkow 2021
 
-Distributed under the MIT license. See [`LICENSE`](TODO) for more information.
+Distributed under the MIT license. See [`LICENSE`](LICENSE) for more information.
