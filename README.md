@@ -28,7 +28,7 @@ In addition to that, there are some example tasks in `/taskpool` and there is a 
 Executing the `create.sh` script as follows
 
 ```bash
-./create.sh document list.csv
+./create.sh document DocumentName list.csv
 ```
 
 will create individualised versions of `document.tex` for each line present in the `list.csv` file. 
@@ -39,7 +39,7 @@ The `.csv` file can be exported from the e-learning platform moodle. It has to a
 [[id]],FirstName,LastName,MatriculationNumber
 ```
 
-The individualised `.pdf` files will be present in the `/output` folder and will be named `MatriculationNumber_FirstName_LastName_DocumentName.pdf`.
+The individualised `.pdf` files will be present in the [`/output`](output) folder and will be named `MatriculationNumber_FirstName_LastName_DocumentName.pdf`.
 
 # Examples
 
