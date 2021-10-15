@@ -4,15 +4,15 @@
 
 ## Contents
 
-- [Constants]()
-- [random.create]()
-- [random.oneof]()
-- [random.integer]()
-- [random.rational]()
-- [random.real]()
-- [random.line]()
-- [random.parabola]()
-- [random.polynomial]()
+- [Constants](#module-constants)
+- [random.create](#randomcreatee-t---create-any-randomized-expression)
+- [random.oneof](#randomoneoft---randomly-choose-one-of-the-supplied-values)
+- [random.integer](#randomintegera--b---random-integer)
+- [random.rational](#randomrational---random-rational-number)
+- [random.real](#randomreala--b---random-floating-point-number)
+- [random.line](#randomlinem--b---random-line-equation)
+- [random.parabola](#randomparabolaa---random-parabola)
+- [random.polynomial](#randompolynomialdeg---random-polynomial)
 
 ---
 

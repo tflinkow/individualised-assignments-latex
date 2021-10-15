@@ -19,17 +19,17 @@ print(res[2]) -- "\frac{1}{2} x"
 
 ## Contents
 
-- [symcomp.evalAt]()
-- [symcomp.sub]()
-- [symcomp.solve]()
-- [symcomp.diff]()
-- [symcomp.integrate]()
-- [symcomp.identityMatrix]()
-- [symcomp.matrix]()
-- [symcomp.matrixSub]()
-- [symcomp.scalarMul]()
-- [symcomp.det]()
-- [symcomp.eigenvalues]()
+- [symcomp.evalAt](#symcompevalatf-x-x0---evaluates-fx-at-xx0)
+- [symcomp.sub](#symcompsuba-b---returns-a---b)
+- [symcomp.solve](#symcompsolvef-x---solves-fx--0)
+- [symcomp.diff](#symcompdifff-x---evaluates-dfdx)
+- [symcomp.integrate](#symcompintegratef-x--l--u---integrates-f-from-l-to-u-with-respect-to-x)
+- [symcomp.identityMatrix](#symcompidentitymatrixs---the-identity-matrix-of-size-s)
+- [symcomp.matrix](#symcompmatrixstr---a-matrix)
+- [symcomp.matrixSub](#symcompmatrixsuba-b---returns-a---b)
+- [symcomp.scalarMul](#symcompscalarmulk-a---returns-ka)
+- [symcomp.det](#symcompdeta---the-determinant-of-a-matrix)
+- [symcomp.eigenvalues](#symcompeigenvaluesa---the-eigenvalues-of-a-matrix-a)
 
 ---
 
