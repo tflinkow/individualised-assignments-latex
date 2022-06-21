@@ -4,7 +4,7 @@ This project is a framework to create individualised assignments for mathematics
 
 It is part of my bachelor's project at the Hochschule Ruhr West University of Applied Sciences and was created from August to October 2021.
 
-The bachelor's [thesis](thesis.pdf) provides a complete, detailed overview of the framework and its components, alternative approaches and an evaluation.
+The bachelor's [thesis](thesis.pdf) provides a complete, detailed overview of the framework and its components, shows alternative approaches and contains an evaluation of the framework.
 The [slides](slides.pdf) of my thesis presentation may offer an easier, shorter introduction.
 
 # Prerequisites
