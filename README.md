@@ -3,7 +3,9 @@
 This project is a framework to create individualised assignments for mathematics in LaTeX.
 
 It is part of my bachelor's project at the Hochschule Ruhr West University of Applied Sciences and was created from August to October 2021.
-The bachelor's thesis itself is [thesis.pdf](thesis.pdf).
+
+The bachelor's [thesis](thesis.pdf) provides a complete, detailed overview of the framework and its components, alternative approaches and an evaluation.
+The [slides](slides.pdf) of my thesis presentation may offer an easier, shorter introduction.
 
 # Prerequisites
 
@@ -33,13 +35,13 @@ Executing the `create.sh` script as follows
 
 will create individualised versions of `document.tex` for each line present in the `list.csv` file. One file is generated with solutions and one without. 
 
-The `.csv` file can be exported from the e-learning platform moodle. It has to adhere to the following format:
+The `csv` file can be exported from the e-learning platform moodle. It has to adhere to the following format:
 
 ```
 [[id]],"First name","Surname","ID number"
 ```
 
-The individualised `.pdf` files will be present in the [`/output`](output) folder and will be named `ID_FirstName_LastName_DocumentName.pdf` (without solutions) and `ID_FirstName_LastName_DocumentName_Solutions.pdf`.
+The individualised `pdf` files will be present in the [`/output`](output) folder and will be named `ID_FirstName_LastName_DocumentName.pdf` (without solutions) and `ID_FirstName_LastName_DocumentName_Solutions.pdf`.
 
 # Examples
 
